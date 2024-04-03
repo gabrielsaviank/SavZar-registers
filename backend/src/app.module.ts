@@ -6,13 +6,15 @@ import { UsersModule } from './users/users.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { UserEntity } from './users/users.entity';
 import { PersonsModule } from './persons/persons.module';
+import { PersonEntity } from './persons/person.entity';
+import { AddressEntity } from './addresses/address.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [UserEntity],
+      entities: [UserEntity, PersonEntity, AddressEntity],
       synchronize: true,
     }),
     UsersModule,
