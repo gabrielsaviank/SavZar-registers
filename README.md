@@ -2,4 +2,4 @@
 
 ## Compiling backend
 
-``yarn run:dev``
+``yarn start:dev``

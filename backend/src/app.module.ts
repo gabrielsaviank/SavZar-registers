@@ -15,6 +15,7 @@ import { AddressEntity } from './addresses/address.entity';
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [UserEntity, PersonEntity, AddressEntity],
+      // MIND THE GAP here. This is a development-only option.
       synchronize: true,
     }),
     UsersModule,
