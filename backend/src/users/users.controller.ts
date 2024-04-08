@@ -8,12 +8,14 @@ import {
   Patch,
   Post,
   Query,
+  Session,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserEntity } from './users.entity';
 import { UpdateUserDto } from './dtos/update-user-dto';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -59,5 +61,20 @@ export class UsersController {
     @Body() body: UpdateUserDto,
   ): Promise<UserEntity> {
     return this.usersService.update(id, body);
+  }
+
+  // @Get('/whoami')
+  // whoAmI(@Session() session: Record<string, any>): Promise<UserEntity> {
+  //   return this.usersService.findOneById(session.userId);
+  // }
+
+  @Post('/logout')
+  signOut(@Session() session: Record<string, any>) {
+    session.userId = null;
+  }
+
+  @Get('/whoami')
+  whoAmI(@CurrentUser() user: UserEntity) {
+    return user;
   }
 }
