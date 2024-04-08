@@ -21,6 +21,7 @@ export class PersonsService {
       birthdate: personDto.birthdate,
       maritalStatus: personDto.martialStatus,
     };
+
     return this.personsRepository.save(person);
   }
 }
