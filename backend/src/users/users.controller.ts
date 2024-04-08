@@ -20,18 +20,25 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { UserDto } from './dtos/user-dto';
+import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 
 @Controller('auth')
 @Serialize(UserDto)
+@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
   ) {}
 
+  // @Get('/whoami')
+  // whoAmI(@Session() session: Record<string, any>): Promise<UserEntity> {
+  //   return this.usersService.findOneById(session.userId);
+  // }
+
   @Get('/whoami')
-  whoAmI(@Session() session: Record<string, any>): Promise<UserEntity> {
-    return this.usersService.findOneById(session.userId);
+  whoAmI(@CurrentUser() user: UserEntity) {
+    return user;
   }
 
   @Post('/signup')
@@ -86,13 +93,8 @@ export class UsersController {
     return this.usersService.update(id, body);
   }
 
-  @Post('/logout')
+  @Post('/signout')
   signOut(@Session() session: Record<string, any>) {
     session.userId = null;
   }
-
-  // @Get('/whoami')
-  // whoAmI(@CurrentUser() user: UserEntity) {
-  //   return user;
-  // }
 }
