@@ -23,15 +23,11 @@ export class UsersService {
   }
 
   async findOneById(id: string): Promise<UserEntity> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    return this.usersRepository.findOne(id);
+    return this.usersRepository.findOne({ where: { id } });
   }
 
   async find(email: string): Promise<UserEntity[]> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    return this.usersRepository.find({ email });
+    return this.usersRepository.find({ where: { email } });
   }
 
   async update(id: string, attrs: Partial<UserEntity>) {
