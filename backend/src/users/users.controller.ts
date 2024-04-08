@@ -53,7 +53,7 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @Patch('/:id')
+  @Patch('/update/:id')
   async updateUser(
     @Param('id') id: string,
     @Body() body: UpdateUserDto,
