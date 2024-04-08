@@ -9,6 +9,8 @@ import {
   Post,
   Query,
   Session,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
@@ -51,8 +53,9 @@ export class UsersController {
     return user;
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/:id')
-  async findOneUser(@Query('id') id: string): Promise<UserEntity> {
+  async findOneUser(@Param('id') id: string): Promise<UserEntity> {
     const user = await this.usersService.findOneById(id);
 
     if (!user) {
@@ -62,6 +65,7 @@ export class UsersController {
     return user;
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAllUsers(@Query('email') email: string): Promise<UserEntity[]> {
     return this.usersService.find(email);

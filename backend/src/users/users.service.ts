@@ -24,9 +24,10 @@ export class UsersService {
 
   async findOneById(id: string): Promise<UserEntity> {
     if (!id) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('User not found 2');
     }
-    return this.usersRepository.findOne({ where: { id } });
+
+    return await this.usersRepository.findOne({ where: { id } });
   }
 
   async find(email: string): Promise<UserEntity[]> {
