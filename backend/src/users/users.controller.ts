@@ -9,8 +9,6 @@ import {
   Post,
   Query,
   Session,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
@@ -20,11 +18,9 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { UserDto } from './dtos/user-dto';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 
 @Controller('auth')
 @Serialize(UserDto)
-@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -74,7 +70,6 @@ export class UsersController {
     return user;
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAllUsers(@Query('email') email: string): Promise<UserEntity[]> {
     return this.usersService.find(email);
