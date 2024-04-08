@@ -4,6 +4,8 @@ import { PersonsService } from './persons.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { UserEntity } from '../users/users.entity';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { PersonDto } from './dtos/person.dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
 
 @Controller('persons')
 export class PersonsController {
@@ -11,6 +13,7 @@ export class PersonsController {
 
   @Post()
   @UseGuards(AuthGuard)
+  @Serialize(PersonDto)
   createPerson(@Body() body: CreatePersonDto, @CurrentUser() user: UserEntity) {
     return this.personsService.create(body, user);
   }
