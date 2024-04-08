@@ -9,6 +9,7 @@ import {
   Post,
   Query,
   Session,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
@@ -18,6 +19,7 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { UserDto } from './dtos/user-dto';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -33,6 +35,7 @@ export class UsersController {
   // }
 
   @Get('/whoami')
+  @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: UserEntity) {
     return user;
   }
@@ -60,6 +63,7 @@ export class UsersController {
   }
 
   @Get('/:id')
+  @UseGuards(AuthGuard)
   async findOneUser(@Param('id') id: string): Promise<UserEntity> {
     const user = await this.usersService.findOneById(id);
 
@@ -71,16 +75,20 @@ export class UsersController {
   }
 
   @Get()
+  // Uncomment me later
+  // @UseGuards(AuthGuard)
   async findAllUsers(@Query('email') email: string): Promise<UserEntity[]> {
     return this.usersService.find(email);
   }
 
   @Delete('/:id')
+  @UseGuards(AuthGuard)
   async removeUser(@Param('id') id: string): Promise<UserEntity> {
     return this.usersService.remove(id);
   }
 
   @Patch('/update/:id')
+  @UseGuards(AuthGuard)
   async updateUser(
     @Param('id') id: string,
     @Body() body: UpdateUserDto,
@@ -91,5 +99,6 @@ export class UsersController {
   @Post('/signout')
   signOut(@Session() session: Record<string, any>) {
     session.userId = null;
+    console.log('User successfully signed out!');
   }
 }
