@@ -1,6 +1,16 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { UsersService } from '../users.service';
+import { UserEntity } from '../users.entity';
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      currentUser?: UserEntity;
+    }
+  }
+}
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
@@ -10,10 +20,8 @@ export class CurrentUserMiddleware implements NestMiddleware {
     const { userId } = req.session || {};
 
     if (userId) {
-      const user = await this.usersService.findOneById(userId);
+      const user: UserEntity = await this.usersService.findOneById(userId);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       req.currentUser = user;
     }
 
