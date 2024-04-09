@@ -1,4 +1,20 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { CreatePersonDto } from './dtos/create-person.dto';
+import { PersonsService } from './persons.service';
+import { AuthGuard } from '../guards/auth.guard';
+import { UserEntity } from '../users/users.entity';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { PersonDto } from './dtos/person.dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
 
 @Controller('persons')
-export class PersonsController {}
+export class PersonsController {
+  constructor(private personsService: PersonsService) {}
+
+  @Post()
+  @UseGuards(AuthGuard)
+  @Serialize(PersonDto)
+  createPerson(@Body() body: CreatePersonDto, @CurrentUser() user: UserEntity) {
+    return this.personsService.create(body, user);
+  }
+}
