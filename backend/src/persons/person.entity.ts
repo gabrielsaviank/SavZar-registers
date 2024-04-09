@@ -13,6 +13,7 @@ export class PersonEntity {
   birthdate: string;
   @Column()
   maritalStatus: string;
+
   @ManyToOne(() => UserEntity, (user) => user.persons)
   user: UserEntity;
 }
