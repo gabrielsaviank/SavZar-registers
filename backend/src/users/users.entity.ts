@@ -9,6 +9,8 @@ export class UserEntity {
   email: string;
   @Column()
   password: string;
+  @Column({ default: true })
+  admin: boolean;
   @OneToMany(() => PersonEntity, (person) => person.user)
   persons: PersonEntity[];
 }

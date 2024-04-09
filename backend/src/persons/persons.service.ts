@@ -24,6 +24,7 @@ export class PersonsService {
     };
 
     person.user = user;
+
     return this.personsRepository.save(person);
   }
 }
