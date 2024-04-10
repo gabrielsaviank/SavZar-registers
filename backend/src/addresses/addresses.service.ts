@@ -13,7 +13,7 @@ export class AddressesService {
     private addressesRepository: Repository<AddressEntity>,
   ) {}
 
-  async create(addressDto: CreateAddressDto, person: PersonEntity) {
+  async create(addressDto: CreateAddressDto, person?: PersonEntity) {
     const address = this.addressesRepository.create({
       id: uuidv4(),
       postCode: addressDto.postCode,

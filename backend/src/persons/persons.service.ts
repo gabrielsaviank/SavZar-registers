@@ -57,6 +57,14 @@ export class PersonsService {
     });
   }
 
+  async findOneById(id: string): Promise<PersonEntity> {
+    if (!id) {
+      throw new NotFoundException('Person not found');
+    }
+
+    return await this.personsRepository.findOne({ where: { id } });
+  }
+
   async update(
     id: string,
     attrs: Partial<PersonEntity>,
