@@ -13,6 +13,7 @@ export class AddressesService {
   ) {}
 
   async create(addressDto: CreateAddressDto, person: PersonEntity) {
+    console.log('hello world FIRST');
     const address = this.addressesRepository.create({
       postCode: addressDto.postCode,
       neighbourhood: addressDto.neighbourhood,
