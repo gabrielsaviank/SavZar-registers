@@ -20,6 +20,12 @@ export class PersonsController {
     return this.personsService.create(body, user);
   }
 
+  @Get()
+  @UseGuards(AuthGuard)
+  async getPersons() {
+    return this.personsService.findAll();
+  }
+
   @Get('/:id')
   @UseGuards(AuthGuard)
   async getPerson(@Param('id') id: string) {

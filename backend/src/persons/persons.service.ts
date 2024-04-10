@@ -42,6 +42,10 @@ export class PersonsService {
     return savedPerson;
   }
 
+  async findAll() {
+    return this.personsRepository.find({ relations: ['addresses'] });
+  }
+
   async getPerson(id: string) {
     if (!id) {
       throw new NotFoundException('Person not found');
