@@ -10,7 +10,7 @@ export class PersonDto {
   @Expose()
   birthdate: string;
   @Expose()
-  martialStatus: string;
+  maritalStatus: string;
 
   @Transform(({ obj }) => obj.user.id)
   @Expose()

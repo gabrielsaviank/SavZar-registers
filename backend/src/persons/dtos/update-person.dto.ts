@@ -8,5 +8,5 @@ export class UpdatePersonDto {
   @IsString()
   birthdate: string;
   @IsString()
-  martialStatus: string;
+  maritalStatus: string;
 }

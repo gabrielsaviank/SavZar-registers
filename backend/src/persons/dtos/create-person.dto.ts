@@ -18,7 +18,7 @@ export class CreatePersonDto {
   birthdate: string;
 
   @IsString()
-  martialStatus: string;
+  maritalStatus: string;
 
   @IsArray()
   @ValidateNested({ each: true })

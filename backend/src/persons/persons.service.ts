@@ -24,7 +24,7 @@ export class PersonsService {
       name: personDto.name,
       sex: personDto.sex,
       birthdate: personDto.birthdate,
-      maritalStatus: personDto.martialStatus,
+      maritalStatus: personDto.maritalStatus,
     };
 
     const savedPerson = await this.personsRepository.save(person);
