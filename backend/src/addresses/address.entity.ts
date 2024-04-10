@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { PersonEntity } from '../persons/person.entity';
 
 @Entity()
 export class AddressEntity {
@@ -25,4 +26,7 @@ export class AddressEntity {
 
   @Column()
   state: string;
+
+  @ManyToOne(() => PersonEntity, (person) => person.addresses)
+  person: PersonEntity;
 }

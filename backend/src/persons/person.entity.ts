@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { UserEntity } from '../users/users.entity';
+import { AddressEntity } from '../addresses/address.entity';
 
 @Entity()
 export class PersonEntity {
@@ -13,6 +20,9 @@ export class PersonEntity {
   birthdate: string;
   @Column()
   maritalStatus: string;
+
+  @OneToMany(() => AddressEntity, (address) => address.person)
+  addresses: AddressEntity[];
 
   @ManyToOne(() => UserEntity, (user) => user.persons)
   user: UserEntity;

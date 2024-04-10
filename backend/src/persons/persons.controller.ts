@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Param } from '@nestjs/common';
 import { CreatePersonDto } from './dtos/create-person.dto';
 import { PersonsService } from './persons.service';
 import { AuthGuard } from '../guards/auth.guard';
@@ -18,5 +18,11 @@ export class PersonsController {
   @Serialize(PersonDto)
   createPerson(@Body() body: CreatePersonDto, @CurrentUser() user: UserEntity) {
     return this.personsService.create(body, user);
+  }
+
+  @Get('/:id')
+  @UseGuards(AuthGuard)
+  async getPerson(@Param('id') id: string) {
+    return this.personsService.getPerson(id);
   }
 }

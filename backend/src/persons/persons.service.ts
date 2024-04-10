@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PersonEntity } from './person.entity';
 import { DeepPartial, Repository } from 'typeorm';
@@ -26,5 +26,13 @@ export class PersonsService {
     person.user = user;
 
     return this.personsRepository.save(person);
+  }
+
+  async getPerson(id: string) {
+    if (!id) {
+      throw new NotFoundException('Person not found');
+    }
+
+    return this.personsRepository.findOne({ where: { id } });
   }
 }
