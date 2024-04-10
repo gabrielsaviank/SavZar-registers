@@ -1,4 +1,12 @@
-import { Controller, Post, Body, UseGuards, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Param,
+  Patch,
+} from '@nestjs/common';
 import { CreatePersonDto } from './dtos/create-person.dto';
 import { PersonsService } from './persons.service';
 import { AuthGuard } from '../guards/auth.guard';
@@ -7,6 +15,7 @@ import { CurrentUser } from '../users/decorators/current-user.decorator';
 import { PersonDto } from './dtos/person.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { AdminGuard } from '../guards/admin.guard';
+import { UpdatePersonDto } from './dtos/update-person.dto';
 
 @Controller('persons')
 export class PersonsController {
@@ -30,5 +39,12 @@ export class PersonsController {
   @UseGuards(AuthGuard)
   async getPerson(@Param('id') id: string) {
     return this.personsService.getPerson(id);
+  }
+
+  @Patch('/update/:id')
+  @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard)
+  async updatePerson(@Param('id') id: string, @Body() body: UpdatePersonDto) {
+    return this.personsService.update(id, body);
   }
 }

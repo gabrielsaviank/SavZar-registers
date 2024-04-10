@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PersonEntity } from './person.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreatePersonDto } from './dtos/create-person.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserEntity } from '../users/users.entity';
@@ -46,7 +46,7 @@ export class PersonsService {
     return this.personsRepository.find({ relations: ['addresses'] });
   }
 
-  async getPerson(id: string) {
+  async getPerson(id: string): Promise<PersonEntity> {
     if (!id) {
       throw new NotFoundException('Person not found');
     }
@@ -55,5 +55,38 @@ export class PersonsService {
       where: { id },
       relations: ['addresses'],
     });
+  }
+
+  async update(
+    id: string,
+    attrs: Partial<PersonEntity>,
+  ): Promise<PersonEntity> {
+    const person = await this.getPerson(id);
+
+    if (!person) {
+      throw new NotFoundException('Person not found');
+    }
+
+    Object.assign(person, attrs);
+
+    return this.personsRepository.save(person);
+  }
+
+  async remove(id: string): Promise<PersonEntity> {
+    const person = await this.getPerson(id);
+
+    if (!person) {
+      throw new NotFoundException('Person not found');
+    }
+
+    if (person.addresses) {
+      await Promise.all(
+        person.addresses.map(async (address): Promise<DeleteResult> => {
+          return await this.addressesService.remove(address.id);
+        }),
+      );
+    }
+
+    return this.personsRepository.remove(person);
   }
 }
