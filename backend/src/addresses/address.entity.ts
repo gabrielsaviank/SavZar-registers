@@ -13,7 +13,7 @@ export class AddressEntity {
   neighbourhood: string;
 
   @Column()
-  number: string;
+  number: number;
 
   @Column()
   complement: string;
