@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PersonEntity } from './person.entity';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreatePersonDto } from './dtos/create-person.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserEntity } from '../users/users.entity';
@@ -15,7 +15,10 @@ export class PersonsService {
     private addressesService: AddressesService,
   ) {}
 
-  async create(personDto: CreatePersonDto, user: UserEntity) {
+  async create(
+    personDto: CreatePersonDto,
+    user: UserEntity,
+  ): Promise<PersonEntity> {
     const person: any = {
       id: uuidv4(),
       name: personDto.name,
@@ -44,6 +47,9 @@ export class PersonsService {
       throw new NotFoundException('Person not found');
     }
 
-    return this.personsRepository.findOne({ where: { id } });
+    return this.personsRepository.findOne({
+      where: { id },
+      relations: ['addresses'],
+    });
   }
 }
