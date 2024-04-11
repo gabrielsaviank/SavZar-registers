@@ -16,7 +16,7 @@ import { styles } from "./styles";
 import { LockPersonOutlined } from "@mui/icons-material";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { useDispatch } from "react-redux";
-import { login, loginStart } from "../../../ducks/reducers/AuthSlice";
+import { login } from "../../../ducks/actions/AuthActions";
 
 export default function Login() {
     const [email, setEmail] = useState("");

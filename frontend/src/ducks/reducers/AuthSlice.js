@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { signin } from "../actions/AuthActions";
-import AlleSysApi from "../../api/AlleSysApi";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     token: null,
@@ -31,18 +29,9 @@ const authSlice = createSlice({
     },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = authSlice.actions;
-
-export const login = (credentials) => async (dispatch) => {
-    dispatch(loginStart());
-    try {
-        const response = await AlleSysApi.post("/auth/signin", { email: credentials.email, password: credentials.password });
-        console.log("response", response);
-        console.log(response);
-        dispatch(loginSuccess(response.data));
-    } catch (error) {
-        dispatch(loginFailure(error.message));
-    }
-};
-
+export const {
+    loginStart,
+    loginSuccess,
+    loginFailure
+} = authSlice.actions;
 export default authSlice.reducer;
