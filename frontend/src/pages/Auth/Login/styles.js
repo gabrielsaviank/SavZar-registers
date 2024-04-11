@@ -1,4 +1,9 @@
 export const styles = {
+    mainDiv: {
+        display: "flex",
+        alignItems: "center",
+        height: "100vh"
+    },
     paper: {
         marginTop: 8,
         display: "flex",

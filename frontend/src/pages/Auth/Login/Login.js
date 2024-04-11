@@ -26,7 +26,7 @@ export default function Login() {
     };
 
     return (
-        <div style={{ display: "flex", alignItems: "center", height: "100vh" }}>
+        <div style={styles.mainDiv}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div style={styles.paper}>
