@@ -3,7 +3,7 @@ import { Route, Router } from "react-router-dom";
 
 
 import history from "./history";
-import Login from "./pages/Auth/Login";
+import Login from "./pages/Auth/Login/Login";
 
 const App = () => {
     return(
