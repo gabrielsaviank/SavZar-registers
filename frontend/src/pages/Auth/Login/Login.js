@@ -15,14 +15,17 @@ import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { styles } from "./styles";
 import { LockPersonOutlined } from "@mui/icons-material";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
+import { useDispatch } from "react-redux";
+import { login, loginStart } from "../../../ducks/reducers/AuthSlice";
 
 export default function Login() {
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission here
+        dispatch(login({ email, password }));
     };
 
     return (
