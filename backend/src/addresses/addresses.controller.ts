@@ -10,34 +10,32 @@ import {
 import { AddressesService } from './addresses.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
-import { Serialize } from '../interceptors/serialize.interceptor';
-import { PersonDto } from '../persons/dtos/person.dto';
 import { CreateAddressDto } from './dtos/create-address.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { AddressEntity } from './address.entity';
 import { PersonsService } from '../persons/persons.service';
 import { UpdateAddressDto } from './dtos/update-address.dto';
 import { DeleteResult } from 'typeorm';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { AddressDto } from './dtos/address.dto';
 
 @Controller('addresses')
 export class AddressesController {
   constructor(
-    @InjectRepository(AddressEntity)
     private addressesService: AddressesService,
     private personsService: PersonsService,
   ) {}
 
-  @Post('/:personId/create')
+  @Post('create/:personId')
   @UseGuards(AuthGuard)
   @UseGuards(AdminGuard)
-  @Serialize(PersonDto)
+  @Serialize(AddressDto)
   async createAddress(
     @Param('personId') personId: string,
     @Body() body: CreateAddressDto,
   ): Promise<AddressEntity> {
-    const person = await this.personsService.findOneById(personId);
+    const fetchedPerson = await this.personsService.findOneById(personId);
 
-    return this.addressesService.create(body, person);
+    return this.addressesService.create(body, fetchedPerson);
   }
 
   @Patch('/update/:id')

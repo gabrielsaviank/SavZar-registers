@@ -29,13 +29,13 @@ export class PersonsService {
 
     const savedPerson = await this.personsRepository.save(person);
 
-    if (personDto.addresses) {
-      person.addresses = await Promise.all(
-        personDto.addresses.map(async (address) => {
-          return await this.addressesService.create(address, person);
-        }),
-      );
-    }
+    // if (personDto.addresses) {
+    //   person.addresses = await Promise.all(
+    //     personDto.addresses.map(async (address) => {
+    //       return await this.addressesService.create(address, person);
+    //     }),
+    //   );
+    // }
 
     person.user = user;
 
