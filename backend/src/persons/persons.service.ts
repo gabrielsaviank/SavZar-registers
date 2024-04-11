@@ -6,6 +6,7 @@ import { CreatePersonDto } from './dtos/create-person.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserEntity } from '../users/users.entity';
 import { AddressesService } from '../addresses/addresses.service';
+import { AddressEntity } from '../addresses/address.entity';
 
 @Injectable()
 export class PersonsService {
@@ -31,10 +32,12 @@ export class PersonsService {
 
     if (personDto.addresses) {
       person.addresses = await Promise.all(
-        personDto.addresses.map(async (address) => {
+        personDto.addresses.map(async (address): Promise<AddressEntity> => {
           return await this.addressesService.create(address, person);
         }),
       );
+    } else {
+      person.addresses = [];
     }
 
     person.user = user;

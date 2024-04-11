@@ -13,7 +13,9 @@ export class AddressesService {
     private addressesRepository: Repository<AddressEntity>,
   ) {}
 
-  async create(addressDto: CreateAddressDto, person?: PersonEntity) {
+  async create(addressDto: CreateAddressDto, person: PersonEntity) {
+    console.log('HERE');
+
     const address = this.addressesRepository.create({
       id: uuidv4(),
       postCode: addressDto.postCode,
@@ -31,7 +33,7 @@ export class AddressesService {
   }
 
   async findAll() {
-    return this.addressesRepository.find();
+    return await this.addressesRepository.find();
   }
 
   async findOneById(id: string): Promise<AddressEntity> {
