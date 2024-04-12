@@ -1,7 +1,5 @@
 import AlleSysApi from "../../../api/AlleSysApi";
-import Cookies from "js-cookie";
 import { fetchPersonsFailure, fetchPersonsStart, fetchPersonsSuccess } from "../../reducers/PersonsSlice";
-import axios from "axios";
 
 export const fetchPersons = () => async (dispatch) => {
     dispatch(fetchPersonsStart());
