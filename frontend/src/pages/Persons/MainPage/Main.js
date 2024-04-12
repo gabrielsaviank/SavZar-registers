@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPersons } from "../../../ducks/actions/PersonsActions";
 import { BaseTable } from "../../../components/Table/Table";
-import { Container, Pagination, Stack } from "@mui/material";
+import { Box, Container, Pagination, Stack, Typography } from "@mui/material";
 
 
 const Main = () => {
@@ -16,17 +16,19 @@ const Main = () => {
     }, []);
 
     return (
-        <Container>
-            <h1>Persons</h1>
-            <BaseTable data={persons}/>
-            <Stack spacing={2}>
-                <Pagination
-                    count={persons.length}
-                    page={null}
-                    onChange={() => {}}
-                />
-            </Stack>
-        </Container>
+        <Box sx={{ display: "flex", justifyContent: "center", padding: 5 }}>
+            <Container>
+                <Typography variant="h4">Registers</Typography>
+                <BaseTable data={persons}/>
+                <Stack spacing={2}>
+                    <Pagination
+                        count={persons.length}
+                        page={null}
+                        onChange={() => {}}
+                    />
+                </Stack>
+            </Container>
+        </Box>
     );
 };
 

@@ -4,11 +4,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Auth/Login/Login";
 import Main from "./pages/Persons/MainPage/Main";
 import PrivateRoute from "./helpers/PrivateRoute";
+import { useSelector } from "react-redux";
+import { Header } from "./components/Header/Header";
 
 const App = () => {
+    const { isAuthenticated } = useSelector(state => state?.auth);
 
     return (
         <Router>
+            {isAuthenticated && <Header />}
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route exact path='/' element={<PrivateRoute/>}>
