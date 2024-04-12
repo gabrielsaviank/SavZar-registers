@@ -4,15 +4,10 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableBody
+    TableBody, Button
 } from "@mui/material";
-
-
-// const useStyles = makeStyles({
-//     table: {
-//         minWidth: 650,
-//     },
-// });
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const BaseTable = ({ data }) => {
     return (
@@ -24,6 +19,7 @@ export const BaseTable = ({ data }) => {
                     <TableCell>Birthdate</TableCell>
                     <TableCell>Marital Status</TableCell>
                     <TableCell>Addresses</TableCell>
+                    <TableCell>Actions</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -34,6 +30,15 @@ export const BaseTable = ({ data }) => {
                         <TableCell>{row.birthdate}</TableCell>
                         <TableCell>{row.maritalStatus}</TableCell>
                         <TableCell>{row.addresses.length}</TableCell>
+                        <TableCell>
+                            <Button onClick={() => {}} style={{ color: "#348ceb" }}>
+                                <EditIcon />
+                            </Button>
+
+                            <Button onClick={() => {}} style={{ color: "#fc8114" }}>
+                                <DeleteIcon />
+                            </Button>
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>

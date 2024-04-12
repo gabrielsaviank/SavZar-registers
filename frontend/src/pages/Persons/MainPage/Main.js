@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPersons } from "../../../ducks/actions/PersonsActions";
 import { BaseTable } from "../../../components/Table/Table";
+import { Container, Pagination, Stack } from "@mui/material";
 
 
 const Main = () => {
@@ -15,11 +16,19 @@ const Main = () => {
     }, []);
 
     return (
-        <div>
+        <Container>
             <h1>Persons</h1>
             <BaseTable data={persons}/>
-        </div>
+            <Stack spacing={2}>
+                <Pagination
+                    count={persons.length}
+                    page={null}
+                    onChange={() => {}}
+                />
+            </Stack>
+        </Container>
     );
 };
+
 
 export default Main;
