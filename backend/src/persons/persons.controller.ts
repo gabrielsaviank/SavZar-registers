@@ -34,6 +34,7 @@ export class PersonsController {
   @Get()
   @UseGuards(AuthGuard)
   async getPersons(): Promise<PersonEntity[]> {
+    console.log('HERE');
     return this.personsService.findAll();
   }
 

@@ -17,15 +17,19 @@ import { LockPersonOutlined } from "@mui/icons-material";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { useDispatch } from "react-redux";
 import { login } from "../../../ducks/actions/AuthActions";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        dispatch(login({ email, password }));
+        await dispatch(login({ email, password }));
+        navigate("/main");
     };
 
     return (
