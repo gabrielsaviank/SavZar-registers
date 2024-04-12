@@ -26,9 +26,9 @@ export default function Login() {
     const navigate = useNavigate();
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        dispatch(login({ email, password }));
+        await dispatch(login({ email, password }));
         navigate("/main");
     };
 

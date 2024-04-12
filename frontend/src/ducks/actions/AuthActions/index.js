@@ -9,8 +9,8 @@ export const login = (credentials) => async (dispatch) => {
             email: credentials.email,
             password: credentials.password
         });
-        Cookies.set("userId", response.data.id);
 
+        console.log("RESPONSE", response);
         dispatch(loginSuccess(response.data));
     } catch (error) {
         dispatch(loginFailure(error.message));
