@@ -11,6 +11,14 @@ async function bootstrap() {
     credentials: true,
   });
 
+  (app as any).set('etag', false);
+
+  app.use((req, res, next) => {
+    res.removeHeader('x-powered-by');
+    res.removeHeader('date');
+    next();
+  });
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
