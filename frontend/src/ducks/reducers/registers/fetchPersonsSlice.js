@@ -6,7 +6,7 @@ const initialState = {
     error: null,
 };
 
-const personsSlice = createSlice({
+const fetchPersonsSlice = createSlice({
     name: "persons",
     initialState,
     reducers: {
@@ -29,6 +29,6 @@ export const {
     fetchPersonsStart,
     fetchPersonsSuccess,
     fetchPersonsFailure
-} = personsSlice.actions;
+} = fetchPersonsSlice.actions;
 
-export default personsSlice.reducer;
+export default fetchPersonsSlice.reducer;

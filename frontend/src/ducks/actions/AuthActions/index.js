@@ -1,6 +1,5 @@
 import AlleSysApi from "../../../api/AlleSysApi";
-import { loginFailure, loginStart, loginSuccess } from "../../reducers/AuthSlice";
-import Cookies from "js-cookie";
+import { loginFailure, loginStart, loginSuccess } from "../../reducers/auth/signInSlice";
 
 export const login = (credentials) => async (dispatch) => {
     dispatch(loginStart());

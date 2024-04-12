@@ -1,5 +1,5 @@
 import AlleSysApi from "../../../api/AlleSysApi";
-import { fetchPersonsFailure, fetchPersonsStart, fetchPersonsSuccess } from "../../reducers/PersonsSlice";
+import { fetchPersonsFailure, fetchPersonsStart, fetchPersonsSuccess } from "../../reducers/registers/fetchPersonsSlice";
 
 export const fetchPersons = () => async (dispatch) => {
     dispatch(fetchPersonsStart());

@@ -1,6 +1,16 @@
 import React from "react";
 import { TextField } from "@mui/material";
 
+
+type BaseInputType = {
+    label?: string;
+    type?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    autoFocus?: boolean;
+    autoComplete?: string;
+};
+
 export const BaseInput = ({
   label,
   type,
@@ -9,7 +19,7 @@ export const BaseInput = ({
   autoFocus,
   autoComplete,
   ...props
-}) => {
+}: BaseInputType) => {
     return (
         <TextField
             variant="outlined"
