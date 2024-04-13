@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPersons } from "../../../ducks/actions/PersonsActions";
 import { BaseTable } from "../../../components/Table/Table";
 import { Box, Container, Pagination, Stack, Typography } from "@mui/material";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "@reduxjs/toolkit/query";
 
 
 const Main = () => {
-    const dispatch = useDispatch();
-    const { persons }  = useSelector((state) => state.persons);
+    const dispatch: ThunkDispatch<RootState<any, any, any>, unknown, any> = useDispatch();
+
+    const { persons }  = useSelector((state: any) => state?.persons);
     // const isLoading = useSelector((state) => state.persons.isLoading);
     // const error = useSelector((state) => state.persons.error);
 
@@ -23,8 +26,8 @@ const Main = () => {
                 <Stack spacing={2}>
                     <Pagination
                         count={persons.length}
-                        page={null}
-                        onChange={() => {}}
+                        page={1}
+                        onChange={() => console.log("here")}
                     />
                 </Stack>
             </Container>

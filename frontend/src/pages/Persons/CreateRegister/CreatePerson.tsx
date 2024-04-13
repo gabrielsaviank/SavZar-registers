@@ -4,17 +4,24 @@ import { Typography } from "@mui/material";
 
 import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
+import { useDispatch } from "react-redux";
+
+import { createPerson } from "../../../ducks/actions/PersonsActions";
+import { RootState } from "@reduxjs/toolkit/query";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const CreatePerson = () => {
+    const dispatch: ThunkDispatch<RootState<any, any, any>, unknown, any> = useDispatch();
+
     const [name, setName] = useState("");
     const [sex, setSex] = useState("");
     const [birthDate, setBirthDate] = useState("");
     const [maritalStatus, setMaritalStatus] = useState("");
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        await dispatch(createPerson({ name, sex, birthDate, maritalStatus }));
     };
-
 
     return (
         <Container style={{ paddingTop: 30 }}>
@@ -57,6 +64,7 @@ const CreatePerson = () => {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    onClick={() => handleSubmit}
                 >
                     Submit
                 </BaseButton>

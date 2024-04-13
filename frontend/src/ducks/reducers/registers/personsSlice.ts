@@ -53,7 +53,6 @@ export const {
     addPersonsStart,
     addPersonsSuccess,
     addPersonsFailure,
-
 } = personsSlice.actions;
 
 export default personsSlice.reducer;

@@ -23,7 +23,7 @@ import { PersonEntity } from './person.entity';
 export class PersonsController {
   constructor(private personsService: PersonsService) {}
 
-  @Post()
+  @Post('/create')
   @UseGuards(AuthGuard)
   @UseGuards(AdminGuard)
   @Serialize(PersonDto)
@@ -34,7 +34,6 @@ export class PersonsController {
   @Get()
   @UseGuards(AuthGuard)
   async getPersons(): Promise<PersonEntity[]> {
-    console.log('HERE');
     return this.personsService.findAll();
   }
 

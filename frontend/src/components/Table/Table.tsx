@@ -8,8 +8,9 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { PersonType } from "../../helpers/types";
 
-export const BaseTable = ({ data }) => {
+export const BaseTable = ({ data }: any) => {
     return (
         <Table>
             <TableHead>
@@ -23,7 +24,7 @@ export const BaseTable = ({ data }) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data?.map((row) => (
+                {data?.map((row: any) => (
                     <TableRow key={row.id}>
                         <TableCell>{row.name}</TableCell>
                         <TableCell>{row.sex}</TableCell>
@@ -31,11 +32,11 @@ export const BaseTable = ({ data }) => {
                         <TableCell>{row.maritalStatus}</TableCell>
                         <TableCell>{row.addresses.length}</TableCell>
                         <TableCell>
-                            <Button onClick={() => {}} style={{ color: "#348ceb" }}>
+                            <Button onClick={() => console.log("")} style={{ color: "#348ceb" }}>
                                 <EditIcon />
                             </Button>
 
-                            <Button onClick={() => {}} style={{ color: "#fc8114" }}>
+                            <Button onClick={() => console.log("")} style={{ color: "#fc8114" }}>
                                 <DeleteIcon />
                             </Button>
                         </TableCell>

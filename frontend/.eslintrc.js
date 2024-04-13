@@ -46,5 +46,7 @@ module.exports = {
         "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
         "react/prop-types": "off",
         "no-unused-vars": "off",
+        "arrow-body-style": "off",
+
     }
 };
