@@ -11,7 +11,7 @@ export const login = (credentials: UserType) => async (dispatch: Dispatch<any>) 
         const response = await AlleSysApi.post("/auth/signin", {
             email: credentials.email,
             password: credentials.password
-        });
+        }, { withCredentials: true });
 
         dispatch(loginSuccess(response.data));
     } catch (error) {
