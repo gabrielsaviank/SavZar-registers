@@ -64,8 +64,6 @@ export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }:
             addresses: addresses
         }, { withCredentials: true });
 
-        console.log("RESPONSE", response.data);
-
         dispatch(addPersonsSuccess(response.data));
     } catch (error) {
         if (error instanceof Error) {
@@ -77,17 +75,17 @@ export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }:
 };
 
 
-export const updatePerson = ({ name, sex, birthDate, maritalStatus }: PersonType) => async (dispatch: Dispatch<any>) => {
+export const updatePerson = (personData: PersonType, id: string) => async (dispatch: Dispatch<any>) => {
     dispatch(updatePersonStart());
     try {
-        const response = await AlleSysApi.patch("/persons/update", {
-            name: name,
-            sex: sex,
-            birthdate: birthDate,
-            maritalStatus: maritalStatus,
+        const response = await AlleSysApi.patch(`/persons/update/${id}`, {
+            name: personData.name,
+            sex: personData.sex,
+            birthdate: personData.birthDate,
+            maritalStatus: personData.maritalStatus,
         }, { withCredentials: true });
 
-        console.log("RESPONSE", response.data);
+        console.log("RESPONSE UPDATE", response.data);
 
         dispatch(updatePersonSuccess(response.data));
     } catch (error) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
     Table,
     TableHead,
@@ -22,6 +22,31 @@ export const BaseTable = ({ data }: any) => {
         dispatch(deletePerson(id));
     };
 
+
+    const tableRows = useMemo(() => {
+        if (data && Array.isArray(data)) {
+            return data.map((row: any) => (
+                <TableRow key={row.id}>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.sex}</TableCell>
+                    <TableCell>{row.birthdate}</TableCell>
+                    <TableCell>{row.maritalStatus}</TableCell>
+                    <TableCell>{row.addresses?.length}</TableCell>
+                    <TableCell>
+                        <Button onClick={() => navigate(`/edit/${row.id}`)} style={{ color: "#348ceb" }}>
+                            <EditIcon />
+                        </Button>
+                        <Button onClick={() => handleDelete(row.id)} style={{ color: "#fc8114" }}>
+                            <DeleteIcon />
+                        </Button>
+                    </TableCell>
+                </TableRow>
+            ));
+        } else {
+            return null;
+        }
+    }, [data, navigate, handleDelete]);
+
     return (
         <Table>
             <TableHead>
@@ -35,24 +60,7 @@ export const BaseTable = ({ data }: any) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data?.map((row: any) => (
-                    <TableRow key={row.id}>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell>{row.sex}</TableCell>
-                        <TableCell>{row.birthdate}</TableCell>
-                        <TableCell>{row.maritalStatus}</TableCell>
-                        <TableCell>{row.addresses?.length}</TableCell>
-                        <TableCell>
-                            <Button onClick={() => navigate(`/edit/${row.id}`)} style={{ color: "#348ceb" }}>
-                                <EditIcon />
-                            </Button>
-
-                            <Button onClick={() => handleDelete(row.id)} style={{ color: "#fc8114" }}>
-                                <DeleteIcon />
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                ))}
+                {tableRows}
             </TableBody>
         </Table>
     );

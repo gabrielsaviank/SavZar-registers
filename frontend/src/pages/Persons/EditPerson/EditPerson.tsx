@@ -7,13 +7,13 @@ import { Container, Typography } from "@mui/material";
 import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
-import { fetchPersonById } from "../../../ducks/actions/PersonsActions";
+import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
 
 
 const EditPerson = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { persons }  = useSelector((state: any) => state?.persons);
+    const { persons } = useSelector((state: any) => state?.persons);
     const dispatch = useDispatch();
 
     const [personData, setPersonData] = useState({
@@ -28,25 +28,31 @@ const EditPerson = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         dispatch(fetchPersonById(id));
-        setPersonData({
-            name: persons.name,
-            sex: persons.sex,
-            birthDate: persons.birthdate,
-            maritalStatus: persons.maritalStatus,
-            addresses: persons.addresses,
-        });
-    }, []);
+    }, [dispatch, id]);
 
+    useEffect(() => {
+        if (persons) {
+            setPersonData({
+                name: persons.name,
+                sex: persons.sex,
+                birthDate: persons.birthdate,
+                maritalStatus: persons.maritalStatus,
+                addresses: persons.addresses,
+            });
+        }
+    }, [persons]);
 
     const handleSubmit = () => {
-        console.log("here");
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dispatch(updatePerson(personData, id));
+        navigate("/main");
     };
 
-    const handleChange = (event: { target: { name: any; value: any; }; }) => {
-        const { name, value } = event.target;
+    const handleChange = (field: string, value: string) => {
         setPersonData((prevData: any) => ({
             ...prevData,
-            [name]: value,
+            [field]: value,
         }));
     };
 
@@ -58,48 +64,58 @@ const EditPerson = () => {
                     label="Name"
                     type="text"
                     value={personData.name}
-                    onChange={handleChange}
+                    onChange={(event) => handleChange("name", event.target.value)}
                 />
                 <BaseInput
                     label="Sex"
                     type="text"
                     value={personData.sex}
-                    onChange={handleChange}
+                    onChange={(event) => handleChange("sex", event.target.value)}
                 />
                 <BaseInput
                     type="date"
                     value={personData.birthDate}
-                    onChange={handleChange}
+                    onChange={(event) => handleChange("birthDate", event.target.value)}
                 />
                 <BaseInput
                     label="Marital Status"
                     type="text"
                     value={personData.maritalStatus}
-                    onChange={handleChange}
+                    onChange={(event) => handleChange("maritalStatus", event.target.value)}
                 />
                 <Typography variant="h6">Addresses</Typography>
                 {
-                    personData?.addresses.length > 0 && (
+                    personData?.addresses?.length > 0 && (
                         personData.addresses.map((address, index) => (
                             <AddressCard
                                 address={address}
                                 key={index}
                                 action="edit"
-                                onChange={() => console.log("here")}
-                                onDelete={() => console.log("here")}
+                                onChange={(newAddress) => {
+                                    setPersonData((prevData: any) => {
+                                        const updatedAddresses = [...prevData.addresses];
+                                        updatedAddresses[index] = newAddress;
+                                        return {
+                                            ...prevData,
+                                            addresses: updatedAddresses,
+                                        };
+                                    });
+                                }}
+                                onDelete={() => {
+                                    setPersonData((prevData: any) => {
+                                        const updatedAddresses = [...prevData.addresses];
+                                        updatedAddresses.splice(index, 1);
+                                        return {
+                                            ...prevData,
+                                            addresses: updatedAddresses,
+                                        };
+                                    });
+                                }}
                             />
                         ))
                     )
                 }
                 <div style={{ paddingTop: 40 }}>
-                    {/*<BaseButton*/}
-                    {/*    type="button"*/}
-                    {/*    variant="contained"*/}
-                    {/*    color="primary"*/}
-                    {/*    onClick={() => handleAddAddress()}*/}
-                    {/*>*/}
-                    {/*    Add Address*/}
-                    {/*</BaseButton>*/}
                     <BaseButton
                         type="submit"
                         fullWidth

@@ -3,7 +3,8 @@ import { TextField } from "@mui/material";
 
 
 type BaseInputType = {
-    label?: string;
+    id?: string | undefined;
+    label?: string | null;
     type?: string;
     value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -26,10 +27,8 @@ export const BaseInput = ({
             margin="normal"
             required
             fullWidth
-            id={label}
             label={label}
             type={type}
-            name={label}
             autoComplete={autoComplete}
             autoFocus={autoFocus}
             value={value}

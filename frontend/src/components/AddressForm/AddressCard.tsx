@@ -25,37 +25,37 @@ export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onCh
         <Card style={{ width: "35%", marginTop: "20px" }}>
             <CardContent>
                 <BaseInput
-                    label="Post Code"
+                    label={action === "edit" ? null : "Post code"}
                     value={address.postCode}
                     onChange={(event) => handleFieldChange("postCode", event.target.value)}
                 />
                 <BaseInput
-                    label="Neighbourhood"
+                    label={action === "edit" ? null : "Neighbourhood"}
                     value={address.neighbourhood}
                     onChange={(event) => handleFieldChange("neighbourhood", event.target.value)}
                 />
                 <BaseInput
-                    label="Number"
+                    label={action === "edit" ? null : "Number *"}
                     value={address.number}
                     onChange={(event) => handleFieldChange("number", Number(event.target.value))}
                 />
                 <BaseInput
-                    label="Complement"
+                    label={action === "edit" ? null : "Complement"}
                     value={address.complement}
                     onChange={(event) => handleFieldChange("complement", event.target.value)}
                 />
                 <BaseInput
-                    label="Street"
+                    label={action === "edit" ? null : "Street"}
                     value={address.street}
                     onChange={(event) => handleFieldChange("street", event.target.value)}
                 />
                 <BaseInput
-                    label="City"
+                    label={action === "edit" ? null : "City"}
                     value={address.city}
                     onChange={(event) => handleFieldChange("city", event.target.value)}
                 />
                 <BaseInput
-                    label="State"
+                    label={action === "edit" ? null : "State"}
                     value={address.state}
                     onChange={(event) => handleFieldChange("state", event.target.value)}
                 />
