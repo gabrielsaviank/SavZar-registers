@@ -25,7 +25,6 @@ export const fetchPersons = () => async (dispatch: Dispatch<any>) => {
 };
 
 export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }: PersonType) => async (dispatch: Dispatch<any>) => {
-    // console.log("ADD PERSON", addresses);
     dispatch(addPersonsStart());
     try {
         const response = await AlleSysApi.post("/persons/create", {
