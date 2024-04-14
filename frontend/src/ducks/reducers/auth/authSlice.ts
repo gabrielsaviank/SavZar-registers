@@ -8,7 +8,8 @@ const initialState = {
     error: null,
 };
 
-const signInSlice = createSlice({
+
+const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
@@ -26,12 +27,31 @@ const signInSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        logoutStart: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        logoutFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        logoutSuccess: (state) => {
+            state.isLoading = false;
+            state.isAuthenticated = false;
+            state.token = null;
+            state.user = null;
+        }
     },
 });
+
 
 export const {
     loginStart,
     loginSuccess,
-    loginFailure
-} = signInSlice.actions;
-export default signInSlice.reducer;
+    loginFailure,
+    logoutStart,
+    logoutFailure,
+    logoutSuccess
+} = authSlice.actions;
+
+export default authSlice.reducer;

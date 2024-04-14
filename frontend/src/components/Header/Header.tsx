@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import {
     AppBar,
     Toolbar,
@@ -6,10 +6,25 @@ import {
     Box,
     Button
 } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../ducks/actions/AuthActions";
 
+export interface LogoutAction {
+    type: string;
+}
 export const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+
+    const handleSignOut = async() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        await dispatch(logout());
+        navigate("/");
+    };
+
 
     return (
         <AppBar position="static" color={"transparent"}>
@@ -31,7 +46,7 @@ export const Header = () => {
                           <Typography variant="body1">Profile</Typography>
                         </span>
                     </Button>
-                    <Button color="primary" sx={{ textTransform: "none" }}>
+                    <Button color="primary" sx={{ textTransform: "none" }} onClick={() => handleSignOut()}>
                         <span>
                           <Typography variant="body1">Sign Out</Typography>
                         </span>
