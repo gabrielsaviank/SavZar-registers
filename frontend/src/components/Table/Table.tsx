@@ -8,11 +8,12 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { PersonType } from "../../helpers/types";
 import { useDispatch } from "react-redux";
 import { deletePerson } from "../../ducks/actions/PersonsActions";
+import { useNavigate } from "react-router-dom";
 
 export const BaseTable = ({ data }: any) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleDelete = (id: string) => {
@@ -42,7 +43,7 @@ export const BaseTable = ({ data }: any) => {
                         <TableCell>{row.maritalStatus}</TableCell>
                         <TableCell>{row.addresses?.length}</TableCell>
                         <TableCell>
-                            <Button onClick={() => console.log("")} style={{ color: "#348ceb" }}>
+                            <Button onClick={() => navigate(`/edit/${row.id}`)} style={{ color: "#348ceb" }}>
                                 <EditIcon />
                             </Button>
 

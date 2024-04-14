@@ -9,15 +9,20 @@ type  AddressCardType =  {
     address: AddressType;
     onDelete: () => void;
     onChange: (field: string, value: string | number) => void;
+    action?: string;
 }
 
-export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onChange }) => {
+export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onChange, action }) => {
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
     };
 
+    const onDeleteAddress = () => {
+        console.log("Delete");
+    };
+
     return (
-        <Card style={{ width: "35%" }}>
+        <Card style={{ width: "35%", marginTop: "20px" }}>
             <CardContent>
                 <BaseInput
                     label="Post Code"
@@ -56,9 +61,16 @@ export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onCh
                 />
             </CardContent>
             <CardActions>
-                <BaseButton color="primary" onClick={onDelete}>
-                    Close
-                </BaseButton>
+                {action === "edit" ? (
+                    <BaseButton color="error" onClick={onDeleteAddress}>
+                        Delete
+                    </BaseButton>
+                    ) : (
+                    <BaseButton color="primary" onClick={onDelete}>
+                        Close
+                    </BaseButton>
+                )}
+
             </CardActions>
         </Card>
     );
