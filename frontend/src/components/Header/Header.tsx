@@ -17,7 +17,6 @@ export const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-
     const handleSignOut = async() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

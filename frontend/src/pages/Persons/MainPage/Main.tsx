@@ -16,7 +16,7 @@ const Main = () => {
 
     useEffect(() => {
         dispatch(fetchPersons());
-    }, []);
+    }, [persons]);
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", padding: 5 }}>
@@ -25,7 +25,7 @@ const Main = () => {
                 <BaseTable data={persons}/>
                 <Stack spacing={2}>
                     <Pagination
-                        count={persons.length}
+                        count={persons?.length}
                         page={1}
                         onChange={() => console.log("here")}
                     />

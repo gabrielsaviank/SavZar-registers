@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 type BaseInputType = {
     label?: string;
     type?: string;
-    value?: string;
+    value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     autoFocus?: boolean;
     autoComplete?: string;

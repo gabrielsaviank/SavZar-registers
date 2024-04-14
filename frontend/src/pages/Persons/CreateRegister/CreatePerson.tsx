@@ -10,6 +10,8 @@ import { createPerson } from "../../../ducks/actions/PersonsActions";
 import { RootState } from "@reduxjs/toolkit/query";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
+import { AddressType } from "../../../helpers/types";
+import { useNavigate } from "react-router-dom";
 
 const CreatePerson = () => {
     const dispatch: ThunkDispatch<RootState<any, any, any>, unknown, any> = useDispatch();
@@ -19,14 +21,24 @@ const CreatePerson = () => {
     const [maritalStatus, setMaritalStatus] = useState("");
     const [showAddressCard, setShowAddressCard] = useState(false);
     const [addresses, setAddresses] = useState([]);
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await dispatch(createPerson({ name, sex, birthDate, maritalStatus, addresses }));
+        await dispatch(createPerson({
+            name,
+            sex,
+            birthDate,
+            maritalStatus,
+            addresses
+        }));
+        navigate("/main");
     };
 
     const handleAddAddress = () => {
         setShowAddressCard(true);
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         setAddresses([...addresses, {
@@ -40,7 +52,6 @@ const CreatePerson = () => {
         }]);
     };
 
-    console.log("ADDRESSES", addresses);
     const handleDeleteAddress = (index: number) => {
         const updatedAddresses = [...addresses];
         updatedAddresses.splice(index, 1);
@@ -60,7 +71,6 @@ const CreatePerson = () => {
         });
     };
 
-    console.log("ADDRESSES", addresses);
     return (
         <Container style={{ paddingTop: 30 }}>
             <Typography variant="h4">Create Person</Typography>
@@ -116,6 +126,7 @@ const CreatePerson = () => {
                         variant="contained"
                         color="primary"
                         onClick={() => handleSubmit}
+                        style={{ marginTop: "30px" }}
                     >
                         Submit
                     </BaseButton>

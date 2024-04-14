@@ -1,6 +1,7 @@
 export type AddressType = {
     id?: string;
     postCode?: string;
+    neighbourhood?: string;
     number?: number;
     complement?: string;
     street?: string;
@@ -21,3 +22,4 @@ export type PersonType = {
     maritalStatus?: string;
     addresses?: AddressType[] | undefined;
 }
+

@@ -2,7 +2,7 @@ import AlleSysApi from "../../../api/AlleSysApi";
 import { PersonType } from "../../../helpers/types";
 import {
     addPersonsFailure,
-    addPersonsStart, addPersonsSuccess,
+    addPersonsStart, addPersonsSuccess, deletePersonFailure, deletePersonStart, deletePersonSuccess,
     fetchPersonsFailure,
     fetchPersonsStart,
     fetchPersonsSuccess
@@ -24,7 +24,8 @@ export const fetchPersons = () => async (dispatch: Dispatch<any>) => {
     }
 };
 
-export const createPerson = ({ name, sex, birthDate, maritalStatus }: PersonType) => async (dispatch: Dispatch<any>) => {
+export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }: PersonType) => async (dispatch: Dispatch<any>) => {
+    // console.log("ADD PERSON", addresses);
     dispatch(addPersonsStart());
     try {
         const response = await AlleSysApi.post("/persons/create", {
@@ -32,7 +33,10 @@ export const createPerson = ({ name, sex, birthDate, maritalStatus }: PersonType
             sex: sex,
             birthdate: birthDate,
             maritalStatus: maritalStatus,
+            addresses: addresses
         }, { withCredentials: true });
+
+        console.log("RESPONSE", response.data);
 
         dispatch(addPersonsSuccess(response.data));
     } catch (error) {
@@ -40,6 +44,21 @@ export const createPerson = ({ name, sex, birthDate, maritalStatus }: PersonType
             dispatch(addPersonsFailure(error.message));
         } else {
             dispatch(addPersonsFailure("An unknown error occurred."));
+        }
+    }
+};
+
+export const deletePerson = (id: number) => async (dispatch: Dispatch<any>) => {
+    dispatch(deletePersonStart());
+    try {
+        const response = await AlleSysApi.delete(`/persons/delete/${id}`, { withCredentials: true });
+
+        dispatch(deletePersonSuccess(response.data));
+    } catch (error) {
+        if (error instanceof Error) {
+            dispatch(deletePersonFailure(error.message));
+        } else {
+            dispatch(deletePersonFailure("An unknown error occurred."));
         }
     }
 };

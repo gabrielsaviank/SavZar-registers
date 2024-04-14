@@ -1,31 +1,21 @@
 import React from "react";
 import { Card, CardContent, CardActions } from "@mui/material";
 
-
 import { BaseButton } from "../BaseButton/BaseButton";
 import { BaseInput } from "../BaseInput/BaseInput";
+import { AddressType } from "../../helpers/types";
 
-interface Address {
-    postCode?: string;
-    neighbourhood?: string;
-    number?: number;
-    complement?: string;
-    street?: string;
-    city?: string;
-    state?: string;
-}
-
-interface AddressCardProps {
-    address: Address;
+type  AddressCardType =  {
+    address: AddressType;
     onDelete: () => void;
     onChange: (field: string, value: string | number) => void;
 }
 
-export const AddressCard: React.FC<AddressCardProps> = ({ address, onDelete, onChange }: any) => {
-
+export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onChange }) => {
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
     };
+
     return (
         <Card style={{ width: "35%" }}>
             <CardContent>
@@ -42,7 +32,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({ address, onDelete, onC
                 <BaseInput
                     label="Number"
                     value={address.number}
-                    onChange={(event) => handleFieldChange("number", event.target.value)}
+                    onChange={(event) => handleFieldChange("number", Number(event.target.value))}
                 />
                 <BaseInput
                     label="Complement"

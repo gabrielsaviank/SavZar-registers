@@ -9,8 +9,18 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PersonType } from "../../helpers/types";
+import { useDispatch } from "react-redux";
+import { deletePerson } from "../../ducks/actions/PersonsActions";
 
 export const BaseTable = ({ data }: any) => {
+    const dispatch = useDispatch();
+
+    const handleDelete = (id: string) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dispatch(deletePerson(id));
+    };
+
     return (
         <Table>
             <TableHead>
@@ -30,13 +40,13 @@ export const BaseTable = ({ data }: any) => {
                         <TableCell>{row.sex}</TableCell>
                         <TableCell>{row.birthdate}</TableCell>
                         <TableCell>{row.maritalStatus}</TableCell>
-                        <TableCell>{row.addresses.length}</TableCell>
+                        <TableCell>{row.addresses?.length}</TableCell>
                         <TableCell>
                             <Button onClick={() => console.log("")} style={{ color: "#348ceb" }}>
                                 <EditIcon />
                             </Button>
 
-                            <Button onClick={() => console.log("")} style={{ color: "#fc8114" }}>
+                            <Button onClick={() => handleDelete(row.id)} style={{ color: "#fc8114" }}>
                                 <DeleteIcon />
                             </Button>
                         </TableCell>
