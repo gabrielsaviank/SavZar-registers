@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CreatePersonDto } from './dtos/create-person.dto';
 import { PersonsService } from './persons.service';
@@ -31,10 +32,19 @@ export class PersonsController {
     return this.personsService.create(body, user);
   }
 
+  // @Get()
+  // @UseGuards(AuthGuard)
+  // async getPersons(): Promise<PersonEntity[]> {
+  //   return this.personsService.findAll();
+  // }
+
   @Get()
   @UseGuards(AuthGuard)
-  async getPersons(): Promise<PersonEntity[]> {
-    return this.personsService.findAll();
+  async getPersons(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+  ): Promise<PersonEntity[]> {
+    return this.personsService.findAll(page, limit);
   }
 
   @Get('/:id')

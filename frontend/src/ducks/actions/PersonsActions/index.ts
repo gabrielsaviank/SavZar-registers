@@ -9,10 +9,13 @@ import {
 } from "../../reducers/registers/personsSlice";
 import { Dispatch } from "react";
 
-export const fetchPersons = () => async (dispatch: Dispatch<any>) => {
+export const fetchPersons = (page: number, limit: number) => async (dispatch: Dispatch<any>) => {
     dispatch(fetchPersonsStart());
     try {
-        const response = await AlleSysApi.get("/persons", { withCredentials: true });
+        const response = await AlleSysApi.get("/persons", {
+            params: { page, limit },
+            withCredentials: true
+        });
 
         dispatch(fetchPersonsSuccess(response.data));
     } catch (error) {
