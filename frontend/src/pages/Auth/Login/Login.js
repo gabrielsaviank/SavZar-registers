@@ -17,7 +17,7 @@ import { LockPersonOutlined } from "@mui/icons-material";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { useDispatch } from "react-redux";
 import { login } from "../../../ducks/actions/AuthActions";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [email, setEmail] = useState("");
