@@ -103,6 +103,7 @@ const CreatePerson = () => {
                     showAddressCard && (
                         addresses.map((address, index) => (
                             <AddressCard
+                                action={"create"}
                                 address={address}
                                 key={index}
                                 onChange={(field, value) => handleAddressChange(index, field, value)}

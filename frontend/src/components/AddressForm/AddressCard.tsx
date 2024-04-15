@@ -4,6 +4,8 @@ import { Card, CardContent, CardActions } from "@mui/material";
 import { BaseButton } from "../BaseButton/BaseButton";
 import { BaseInput } from "../BaseInput/BaseInput";
 import { AddressCardType } from "../../helpers/types";
+import { useDispatch } from "react-redux";
+import { fetchViaCep } from "../../ducks/actions/ViaActions";
 
 
 export const AddressCard: React.FC<AddressCardType> = ({
@@ -15,8 +17,21 @@ export const AddressCard: React.FC<AddressCardType> = ({
    action,
    onUpdate
 }) => {
+    const dispatch = useDispatch();
+
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
+
+        if (action === "create" && field === "postCode") {
+            console.log("HERE");
+            try {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                dispatch(fetchViaCep(value.toString()));
+            } catch (error) {
+                console.error("Error fetching address details:", error);
+            }
+        }
     };
 
     return (
