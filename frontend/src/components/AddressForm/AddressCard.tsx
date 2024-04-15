@@ -1,29 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardActions } from "@mui/material";
 
 import { BaseButton } from "../BaseButton/BaseButton";
 import { BaseInput } from "../BaseInput/BaseInput";
 import { AddressCardType } from "../../helpers/types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchViaCep } from "../../ducks/actions/ViaActions";
 
 
 export const AddressCard: React.FC<AddressCardType> = ({
    address,
    onDelete,
-    onDeleteAddress,
+   onDeleteAddress,
    onChange,
     onCreateAddress,
    action,
    onUpdate
 }) => {
     const dispatch = useDispatch();
+    const { via } = useSelector((state: any) => state);
+
+    const [populatedAddress, setPopulatedAddress] = useState({ ...address });
+
+    useEffect(() => {
+        const populateAddress = () => {
+            if (action === "create") {
+                setPopulatedAddress({
+                    neighbourhood: via.data.bairro || "",
+                    city: via.data.localidade || "",
+                    complement: via.data.complemento || "",
+                    state: via.data.uf || "",
+                    street: via.data.logradouro || ""
+                });
+            }
+        };
+
+        populateAddress();
+    }, [via]);
 
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
 
         if (action === "create" && field === "postCode") {
-            console.log("HERE");
             try {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
@@ -39,12 +57,12 @@ export const AddressCard: React.FC<AddressCardType> = ({
             <CardContent>
                 <BaseInput
                     label={address?.postCode ? null : "Post code"}
-                    value={address.postCode}
+                    value={populatedAddress?.postCode}
                     onChange={(event) => handleFieldChange("postCode", event.target.value)}
                 />
                 <BaseInput
                     label={address?.neighbourhood ? null : "Neighbourhood"}
-                    value={address.neighbourhood}
+                    value={populatedAddress?.neighbourhood}
                     onChange={(event) => handleFieldChange("neighbourhood", event.target.value)}
                 />
                 <BaseInput
@@ -54,22 +72,22 @@ export const AddressCard: React.FC<AddressCardType> = ({
                 />
                 <BaseInput
                     label={address?.complement ? null : "Complement"}
-                    value={address.complement}
+                    value={populatedAddress?.complement}
                     onChange={(event) => handleFieldChange("complement", event.target.value)}
                 />
                 <BaseInput
                     label={address?.street ? null : "Street"}
-                    value={address.street}
+                    value={populatedAddress.street}
                     onChange={(event) => handleFieldChange("street", event.target.value)}
                 />
                 <BaseInput
                     label={address?.city ? null : "City"}
-                    value={address.city}
+                    value={populatedAddress.city}
                     onChange={(event) => handleFieldChange("city", event.target.value)}
                 />
                 <BaseInput
                     label={address?.state ? null : "State"}
-                    value={address.state}
+                    value={populatedAddress.state}
                     onChange={(event) => handleFieldChange("state", event.target.value)}
                 />
             </CardContent>
