@@ -53,7 +53,31 @@ const personsSlice = createSlice({
         deletePersonFailure: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
-        }
+        },
+        updatePersonStart: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        updatePersonSuccess: (state, action: PayloadAction<PersonType>) => {
+            state.isLoading = false;
+            state.error = null;
+        },
+        updatePersonFailure: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        fetchPersonByIdStart: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        fetchPersonByIdSuccess: (state, action: PayloadAction<PersonType[]>) => {
+            state.isLoading = false;
+            state.persons = action.payload;
+        },
+        fetchPersonByIdFailure: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
     },
 });
 
@@ -67,7 +91,13 @@ export const {
     addPersonsFailure,
     deletePersonStart,
     deletePersonSuccess,
-    deletePersonFailure
+    deletePersonFailure,
+    updatePersonStart,
+    updatePersonSuccess,
+    updatePersonFailure,
+    fetchPersonByIdStart,
+    fetchPersonByIdSuccess,
+    fetchPersonByIdFailure,
 } = personsSlice.actions;
 
 export default personsSlice.reducer;

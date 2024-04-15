@@ -2,17 +2,28 @@ import AlleSysApi from "../../../api/AlleSysApi";
 import { PersonType } from "../../../helpers/types";
 import {
     addPersonsFailure,
-    addPersonsStart, addPersonsSuccess, deletePersonFailure, deletePersonStart, deletePersonSuccess,
+    addPersonsStart,
+    addPersonsSuccess,
+    deletePersonFailure,
+    deletePersonStart,
+    deletePersonSuccess, fetchPersonByIdFailure,
+    fetchPersonByIdStart, fetchPersonByIdSuccess,
     fetchPersonsFailure,
     fetchPersonsStart,
-    fetchPersonsSuccess
+    fetchPersonsSuccess,
+    updatePersonFailure,
+    updatePersonStart,
+    updatePersonSuccess
 } from "../../reducers/registers/personsSlice";
 import { Dispatch } from "react";
 
-export const fetchPersons = () => async (dispatch: Dispatch<any>) => {
+export const fetchPersons = (page: number, limit: number) => async (dispatch: Dispatch<any>) => {
     dispatch(fetchPersonsStart());
     try {
-        const response = await AlleSysApi.get("/persons", { withCredentials: true });
+        const response = await AlleSysApi.get("/persons", {
+            params: { page, limit },
+            withCredentials: true
+        });
 
         dispatch(fetchPersonsSuccess(response.data));
     } catch (error) {
@@ -23,6 +34,22 @@ export const fetchPersons = () => async (dispatch: Dispatch<any>) => {
         }
     }
 };
+
+export const fetchPersonById = (id: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(fetchPersonByIdStart());
+    try {
+        const response = await AlleSysApi.get(`/persons/${id}`, { withCredentials: true });
+
+        dispatch(fetchPersonByIdSuccess(response.data));
+    } catch (error) {
+        if (error instanceof Error) {
+            dispatch(fetchPersonByIdFailure(error.message));
+        } else {
+            dispatch(fetchPersonByIdFailure("An unknown error occurred."));
+        }
+    }
+};
+
 
 export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }: PersonType) => async (dispatch: Dispatch<any>) => {
     dispatch(addPersonsStart());
@@ -35,14 +62,34 @@ export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }:
             addresses: addresses
         }, { withCredentials: true });
 
-        console.log("RESPONSE", response.data);
-
         dispatch(addPersonsSuccess(response.data));
     } catch (error) {
         if (error instanceof Error) {
             dispatch(addPersonsFailure(error.message));
         } else {
             dispatch(addPersonsFailure("An unknown error occurred."));
+        }
+    }
+};
+
+export const updatePerson = (personData: PersonType, id: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(updatePersonStart());
+    try {
+        const response = await AlleSysApi.patch(`/persons/update/${id}`, {
+            name: personData.name,
+            sex: personData.sex,
+            birthdate: personData.birthDate,
+            maritalStatus: personData.maritalStatus,
+        }, { withCredentials: true });
+
+        console.log("RESPONSE UPDATE", response.data);
+
+        dispatch(updatePersonSuccess(response.data));
+    } catch (error) {
+        if (error instanceof Error) {
+            dispatch(updatePersonFailure(error.message));
+        } else {
+            dispatch(updatePersonFailure("An unknown error occurred."));
         }
     }
 };

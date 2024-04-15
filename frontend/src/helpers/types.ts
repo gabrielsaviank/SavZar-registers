@@ -23,3 +23,13 @@ export type PersonType = {
     addresses?: AddressType[] | undefined;
 }
 
+export type AddressCardType = {
+    address: AddressType,
+    onDelete?: () => void,
+    onChange: (field: string, value: string | number) => void,
+    action?: string,
+    onUpdate?: () => void,
+    onDeleteAddress?: () => void,
+    onCreateAddress?: (address: AddressType) => void,
+    key?: unknown,
+}

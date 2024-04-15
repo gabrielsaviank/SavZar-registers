@@ -3,62 +3,83 @@ import { Card, CardContent, CardActions } from "@mui/material";
 
 import { BaseButton } from "../BaseButton/BaseButton";
 import { BaseInput } from "../BaseInput/BaseInput";
-import { AddressType } from "../../helpers/types";
+import { AddressCardType } from "../../helpers/types";
 
-type  AddressCardType =  {
-    address: AddressType;
-    onDelete: () => void;
-    onChange: (field: string, value: string | number) => void;
-}
 
-export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onChange }) => {
+export const AddressCard: React.FC<AddressCardType> = ({
+   address,
+   onDelete,
+    onDeleteAddress,
+   onChange,
+    onCreateAddress,
+   action,
+   onUpdate
+}) => {
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
     };
 
     return (
-        <Card style={{ width: "35%" }}>
+        <Card style={{ width: "35%", marginTop: "20px" }}>
             <CardContent>
                 <BaseInput
-                    label="Post Code"
+                    label={address?.postCode ? null : "Post code"}
                     value={address.postCode}
                     onChange={(event) => handleFieldChange("postCode", event.target.value)}
                 />
                 <BaseInput
-                    label="Neighbourhood"
+                    label={address?.neighbourhood ? null : "Neighbourhood"}
                     value={address.neighbourhood}
                     onChange={(event) => handleFieldChange("neighbourhood", event.target.value)}
                 />
                 <BaseInput
-                    label="Number"
+                    label={address?.number ? null : "Number *"}
                     value={address.number}
                     onChange={(event) => handleFieldChange("number", Number(event.target.value))}
                 />
                 <BaseInput
-                    label="Complement"
+                    label={address?.complement ? null : "Complement"}
                     value={address.complement}
                     onChange={(event) => handleFieldChange("complement", event.target.value)}
                 />
                 <BaseInput
-                    label="Street"
+                    label={address?.street ? null : "Street"}
                     value={address.street}
                     onChange={(event) => handleFieldChange("street", event.target.value)}
                 />
                 <BaseInput
-                    label="City"
+                    label={address?.city ? null : "City"}
                     value={address.city}
                     onChange={(event) => handleFieldChange("city", event.target.value)}
                 />
                 <BaseInput
-                    label="State"
+                    label={address?.state ? null : "State"}
                     value={address.state}
                     onChange={(event) => handleFieldChange("state", event.target.value)}
                 />
             </CardContent>
             <CardActions>
-                <BaseButton color="primary" onClick={onDelete}>
-                    Close
-                </BaseButton>
+                {action === "edit" ? (
+                    <>
+                        <BaseButton color="error" onClick={onDeleteAddress}>
+                            Delete
+                        </BaseButton>
+                        <BaseButton color="primary" onClick={onUpdate}>
+                            Update
+                        </BaseButton>
+                    </>
+                ) : (
+                    <>
+                        <BaseButton color="primary" onClick={onDelete}>
+                            Close
+                        </BaseButton>
+                        {onCreateAddress && (
+                            <BaseButton color="primary" onClick={() => onCreateAddress(address)}>
+                                Add new Address
+                            </BaseButton>
+                        )}
+                    </>
+                )}
             </CardActions>
         </Card>
     );

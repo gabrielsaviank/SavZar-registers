@@ -45,8 +45,13 @@ export class PersonsService {
     return savedPerson;
   }
 
-  async findAll() {
-    return this.personsRepository.find({ relations: ['addresses'] });
+  async findAll(page: number, limit: number): Promise<PersonEntity[]> {
+    const skip = (page - 1) * limit;
+    return this.personsRepository.find({
+      relations: ['addresses'],
+      skip,
+      take: limit,
+    });
   }
 
   async getPerson(id: string): Promise<PersonEntity> {
