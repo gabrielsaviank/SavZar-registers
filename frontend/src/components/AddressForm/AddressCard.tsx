@@ -21,24 +21,19 @@ export const AddressCard: React.FC<AddressCardType> = ({
     const [populatedAddress, setPopulatedAddress] = useState({ ...address });
 
     useEffect(() => {
-        const populateAddress = () => {
-            if (action === "create") {
-                setPopulatedAddress({
-                    neighbourhood: via.data.bairro || "",
-                    city: via.data.localidade || "",
-                    complement: via.data.complemento || "",
-                    state: via.data.uf || "",
-                    street: via.data.logradouro || "",
-                });
-            }
-        };
-
-        populateAddress();
-    }, [via, address]);
+        if (action === "create" && via.data) {
+            setPopulatedAddress({
+                neighbourhood: via.data.bairro || "",
+                city: via.data.localidade || "",
+                complement: via.data.complemento || "",
+                state: via.data.uf || "",
+                street: via.data.logradouro || "",
+            });
+        }
+    }, [via, address, action]);
 
     const handleFieldChange = (field: string, value: string | number) => {
-        onChange(field, value);
-
+        setPopulatedAddress({ ...populatedAddress, [field]: value });
 
         if (action === "create" && field === "postCode") {
             try {
@@ -66,7 +61,7 @@ export const AddressCard: React.FC<AddressCardType> = ({
                 />
                 <BaseInput
                     label={address?.number ? null : "Number *"}
-                    value={address.number}
+                    value={populatedAddress?.number}
                     onChange={(event) => handleFieldChange("number", Number(event.target.value))}
                 />
                 <BaseInput
@@ -76,7 +71,7 @@ export const AddressCard: React.FC<AddressCardType> = ({
                 />
                 <BaseInput
                     label={address?.street ? null : "Street"}
-                    value={populatedAddress.street}
+                    value={populatedAddress.street || address.street}
                     onChange={(event) => handleFieldChange("street", event.target.value)}
                 />
                 <BaseInput
