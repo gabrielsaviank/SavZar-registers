@@ -35,6 +35,18 @@ const addressSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        createAddressStart: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        createAddressSuccess: (state, action) => {
+            state.isLoading = false;
+            state.addresses = action.payload;
+        },
+        createAddressFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
     }
 });
 
@@ -45,7 +57,10 @@ export const {
     updateAddressFailure,
     deleteAddressStart,
     deleteAddressSuccess,
-    deleteAddressFailure
+    deleteAddressFailure,
+    createAddressStart,
+    createAddressSuccess,
+    createAddressFailure
 } = addressSlice.actions;
 
 export default addressSlice.reducer;

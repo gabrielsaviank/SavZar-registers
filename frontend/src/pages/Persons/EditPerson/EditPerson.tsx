@@ -7,15 +7,25 @@ import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
-import { deleteAddress, updateAddress } from "../../../ducks/actions/AddressesActions";
+import { createAddress, deleteAddress, updateAddress } from "../../../ducks/actions/AddressesActions";
 import { AddressType } from "../../../helpers/types";
-
 
 const EditPerson = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { persons } = useSelector((state: any) => state?.persons);
     const dispatch = useDispatch();
+    const [showAddAddressCard, setShowAddAddressCard] = useState(false);
+    const [newAddress, setNewAddress] = useState({
+        postCode: "",
+        neighbourhood: "",
+        number: "",
+        complement: "",
+        street: "",
+        city: "",
+        state: ""
+    });
+
 
     const [personData, setPersonData] = useState({
         name: "",
@@ -78,6 +88,21 @@ const EditPerson = () => {
         dispatch(deleteAddress(index));
     };
 
+
+    const handleAddAddressChange = (field: string, value: string | number | any) => {
+        setNewAddress(prevAddress => ({
+            ...prevAddress,
+            [field]: value
+        }));
+    };
+
+    const handleCreateAddress = () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dispatch(createAddress(newAddress, persons.id));
+    };
+
+
     return (
         <Container style={{ paddingTop: 30, paddingBottom: 30 }}>
             <Typography variant="h4">Update Person</Typography>
@@ -106,23 +131,43 @@ const EditPerson = () => {
                     onChange={(event) => handleChange("maritalStatus", event.target.value)}
                 />
                 <Typography variant="h6">Addresses</Typography>
-                {
-                    personData?.addresses?.length > 0 && (
-                        personData?.addresses?.map((address, index) => (
-                            <AddressCard
-                                address={address}
-                                key={index}
-                                action="edit"
-                                onChange={(field, value) => {
-                                    const updatedAddress = { ...address, [field]: value };
-                                    handleAddressChange(updatedAddress, index);
-                                }}
-                                onUpdate={() => handleSubmitAddress(personData.addresses[index], personData.addresses[index].id)}
-                                onDeleteAddress={() => handleDeleteAddress(personData.addresses[index].id)}
-                            />
-                        ))
-                    )
-                }
+
+                {personData?.addresses?.length > 0 ? (
+                    personData.addresses.map((address, index) => (
+                        <AddressCard
+                            address={address}
+                            key={index}
+                            action="edit"
+                            onChange={(field, value) => {
+                                const updatedAddress = { ...address, [field]: value };
+                                handleAddressChange(updatedAddress, index);
+                            }}
+                            onUpdate={() => handleSubmitAddress(personData.addresses[index], personData.addresses[index].id)}
+                            onDeleteAddress={() => handleDeleteAddress(personData.addresses[index].id)}
+                        />
+                    ))
+                ) : (
+                    (showAddAddressCard && (
+                        <AddressCard
+                            address={{}}
+                            key={0}
+                            action="create"
+                            onCreateAddress={() => handleCreateAddress()}
+                            onChange={(field, value) => handleAddAddressChange(field, value)}
+                            onDelete={() => setShowAddAddressCard(!showAddAddressCard)}
+                        />
+                    ))
+                )}
+                {personData?.addresses?.length === 0 && (
+                    <BaseButton
+                        variant="contained"
+                        color="primary"
+                        onClick={() => setShowAddAddressCard(!showAddAddressCard)}
+                        style={{ marginTop: 20 }}
+                    >
+                        Add Address
+                    </BaseButton>
+                )}
                 <div style={{ paddingTop: 40 }}>
                     <BaseButton
                         type="submit"

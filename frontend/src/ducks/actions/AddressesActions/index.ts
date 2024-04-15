@@ -1,4 +1,6 @@
 import {
+    createAddressFailure,
+    createAddressStart, createAddressSuccess,
     deleteAddressFailure,
     deleteAddressStart, deleteAddressSuccess,
     updateAddressFailure,
@@ -9,6 +11,28 @@ import { AddressType } from "../../../helpers/types";
 import AlleSysApi from "../../../api/AlleSysApi";
 import { Dispatch } from "react";
 
+export const createAddress = (addressData: AddressType, id: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(createAddressStart());
+try {
+        const response = await AlleSysApi.post(`/addresses/create/${id}`, {
+            postCode: addressData.postCode,
+            neighbourhood: addressData.neighbourhood,
+            number: addressData.number,
+            complement: addressData.complement,
+            street: addressData.street,
+            city: addressData.city,
+            state: addressData.state
+        }, { withCredentials: true });
+
+        dispatch(createAddressSuccess(response.data));
+    } catch (error) {
+        if (error instanceof Error) {
+            dispatch(createAddressFailure(error.message));
+        } else {
+            dispatch(createAddressFailure("An unknown error occurred."));
+        }
+    }
+};
 
 export const updateAddress = (addressData: AddressType, id: string) => async (dispatch: Dispatch<any>) => {
     dispatch(updateAddressStart());

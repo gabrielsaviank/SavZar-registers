@@ -40,8 +40,6 @@ export const fetchPersonById = (id: string) => async (dispatch: Dispatch<any>) =
     try {
         const response = await AlleSysApi.get(`/persons/${id}`, { withCredentials: true });
 
-        console.log("ACTION RESPONSE", response.data);
-
         dispatch(fetchPersonByIdSuccess(response.data));
     } catch (error) {
         if (error instanceof Error) {
