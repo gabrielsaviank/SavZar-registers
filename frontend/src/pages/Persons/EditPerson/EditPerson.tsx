@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { Edit } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Typography } from "@mui/material";
@@ -8,6 +7,8 @@ import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
+import { updateAddress } from "../../../ducks/actions/AddressesActions";
+import { AddressType } from "../../../helpers/types";
 
 
 const EditPerson = () => {
@@ -21,7 +22,7 @@ const EditPerson = () => {
         sex: "",
         birthDate: "",
         maritalStatus: "",
-        addresses: [],
+        addresses: [] as AddressType[] | [],
     });
 
     useEffect(() => {
@@ -56,6 +57,21 @@ const EditPerson = () => {
         }));
     };
 
+    const handleSubmitAddress = (address: AddressType, id: string | undefined) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dispatch(updateAddress(address, id));
+    };
+
+    const handleAddressChange = (updatedAddress: any, index: any) => {
+        const updatedAddresses = [...personData.addresses];
+        updatedAddresses[index] = updatedAddress;
+        setPersonData((prevData) => ({
+            ...prevData,
+            addresses: updatedAddresses,
+        }));
+    };
+
     return (
         <Container style={{ paddingTop: 30, paddingBottom: 30 }}>
             <Typography variant="h4">Update Person</Typography>
@@ -86,21 +102,16 @@ const EditPerson = () => {
                 <Typography variant="h6">Addresses</Typography>
                 {
                     personData?.addresses?.length > 0 && (
-                        personData.addresses.map((address, index) => (
+                        personData?.addresses?.map((address, index) => (
                             <AddressCard
                                 address={address}
                                 key={index}
                                 action="edit"
-                                onChange={(newAddress) => {
-                                    setPersonData((prevData: any) => {
-                                        const updatedAddresses = [...prevData.addresses];
-                                        updatedAddresses[index] = newAddress;
-                                        return {
-                                            ...prevData,
-                                            addresses: updatedAddresses,
-                                        };
-                                    });
+                                onChange={(field, value) => {
+                                    const updatedAddress = { ...address, [field]: value };
+                                    handleAddressChange(updatedAddress, index);
                                 }}
+                                onUpdate={() => handleSubmitAddress(personData.addresses[index], personData.addresses[index].id)}
                                 onDelete={() => {
                                     setPersonData((prevData: any) => {
                                         const updatedAddresses = [...prevData.addresses];

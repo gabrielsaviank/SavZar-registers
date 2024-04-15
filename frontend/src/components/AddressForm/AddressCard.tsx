@@ -5,14 +5,22 @@ import { BaseButton } from "../BaseButton/BaseButton";
 import { BaseInput } from "../BaseInput/BaseInput";
 import { AddressType } from "../../helpers/types";
 
-type  AddressCardType =  {
-    address: AddressType;
-    onDelete: () => void;
-    onChange: (field: string, value: string | number) => void;
-    action?: string;
+type  AddressCardType = {
+    address: AddressType,
+    onDelete: () => void,
+    onChange: (field: string, value: string | number) => void,
+    action?: string,
+    onUpdate?: any,
+    key?: unknown
 }
 
-export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onChange, action }) => {
+export const AddressCard: React.FC<AddressCardType> = ({
+   address,
+   onDelete,
+   onChange,
+   action,
+   onUpdate
+}) => {
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
     };
@@ -62,15 +70,19 @@ export const AddressCard: React.FC<AddressCardType> = ({ address, onDelete, onCh
             </CardContent>
             <CardActions>
                 {action === "edit" ? (
-                    <BaseButton color="error" onClick={onDeleteAddress}>
-                        Delete
-                    </BaseButton>
-                    ) : (
+                    <>
+                        <BaseButton color="error" onClick={onDeleteAddress}>
+                            Delete
+                        </BaseButton>
+                        <BaseButton color="primary" onClick={onUpdate}>
+                            Update
+                        </BaseButton>
+                    </>
+                ) : (
                     <BaseButton color="primary" onClick={onDelete}>
                         Close
                     </BaseButton>
                 )}
-
             </CardActions>
         </Card>
     );
