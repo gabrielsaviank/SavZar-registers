@@ -10,8 +10,10 @@ import { createPerson } from "../../../ducks/actions/PersonsActions";
 import { RootState } from "@reduxjs/toolkit/query";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
-import { AddressType } from "../../../helpers/types";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { calculateAge, calculateDaysUntilBirthday } from "../../../helpers/calculateBirthdayDays";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreatePerson = () => {
     const dispatch: ThunkDispatch<RootState<any, any, any>, unknown, any> = useDispatch();
@@ -33,7 +35,21 @@ const CreatePerson = () => {
             maritalStatus,
             addresses
         }));
-        navigate("/main");
+
+        const age = calculateAge(birthDate);
+        const daysUntilBirthday = calculateDaysUntilBirthday(birthDate);
+
+        if (daysUntilBirthday === 0) {
+            toast.success("🎉 Happy Birthday!");
+        } else {
+            toast.success(
+                `🎉 Happy Birthday! You have ${age} and you have ${daysUntilBirthday} days until your birthday!`
+            );
+        }
+
+        setTimeout(() => {
+            navigate("/main");
+        }, 3000);
     };
 
     const handleAddAddress = () => {
@@ -74,6 +90,7 @@ const CreatePerson = () => {
     return (
         <Container style={{ paddingTop: 30 }}>
             <Typography variant="h4">Create Person</Typography>
+            <ToastContainer />
             <form onSubmit={handleSubmit}>
                 <BaseInput
                     label="Name"

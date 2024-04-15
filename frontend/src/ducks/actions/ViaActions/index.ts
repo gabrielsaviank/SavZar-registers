@@ -8,7 +8,6 @@ export const fetchViaCep = (cep: string) => async (dispatch: Dispatch<any>) => {
   dispatch(fetchViaStart());
   try {
     const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-    console.log("RESPONSE", response);
     dispatch(fetchViaSuccess(response.data));
   } catch (error) {
       if (error instanceof Error) {
