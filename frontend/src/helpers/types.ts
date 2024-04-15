@@ -30,6 +30,6 @@ export type AddressCardType = {
     action?: string,
     onUpdate?: () => void,
     onDeleteAddress?: () => void,
-    onCreateAddress?: any,
+    onCreateAddress?: (address: AddressType) => void,
     key?: unknown,
 }
