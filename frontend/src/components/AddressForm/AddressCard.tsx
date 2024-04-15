@@ -3,30 +3,19 @@ import { Card, CardContent, CardActions } from "@mui/material";
 
 import { BaseButton } from "../BaseButton/BaseButton";
 import { BaseInput } from "../BaseInput/BaseInput";
-import { AddressType } from "../../helpers/types";
+import { AddressCardType } from "../../helpers/types";
 
-type  AddressCardType = {
-    address: AddressType,
-    onDelete: () => void,
-    onChange: (field: string, value: string | number) => void,
-    action?: string,
-    onUpdate?: any,
-    key?: unknown
-}
 
 export const AddressCard: React.FC<AddressCardType> = ({
    address,
    onDelete,
+    onDeleteAddress,
    onChange,
    action,
    onUpdate
 }) => {
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
-    };
-
-    const onDeleteAddress = () => {
-        console.log("Delete");
     };
 
     return (

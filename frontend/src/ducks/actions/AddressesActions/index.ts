@@ -1,4 +1,10 @@
-import { updateAddressFailure, updateAddressStart, updateAddressSuccess } from "../../reducers/addresses/addressSlice";
+import {
+    deleteAddressFailure,
+    deleteAddressStart, deleteAddressSuccess,
+    updateAddressFailure,
+    updateAddressStart,
+    updateAddressSuccess
+} from "../../reducers/addresses/addressSlice";
 import { AddressType } from "../../../helpers/types";
 import AlleSysApi from "../../../api/AlleSysApi";
 import { Dispatch } from "react";
@@ -17,14 +23,27 @@ export const updateAddress = (addressData: AddressType, id: string) => async (di
             state: addressData.state
         }, { withCredentials: true });
 
-        console.log("RESPONSE UPDATE", response.data);
-
         dispatch(updateAddressSuccess(response.data));
     } catch (error) {
         if (error instanceof Error) {
             dispatch(updateAddressFailure(error.message));
         } else {
             dispatch(updateAddressFailure("An unknown error occurred."));
+        }
+    }
+};
+
+
+export const deleteAddress = (id: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(deleteAddressStart());
+    try {
+        const response = await AlleSysApi.delete(`/addresses/delete/${id}`, { withCredentials: true });
+        dispatch(deleteAddressSuccess(response.data));
+    } catch (error) {
+        if (error instanceof Error) {
+            dispatch(deleteAddressFailure(error.message));
+        } else {
+            dispatch(deleteAddressFailure("An unknown error occurred."));
         }
     }
 };

@@ -7,7 +7,7 @@ import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
-import { updateAddress } from "../../../ducks/actions/AddressesActions";
+import { deleteAddress, updateAddress } from "../../../ducks/actions/AddressesActions";
 import { AddressType } from "../../../helpers/types";
 
 
@@ -63,13 +63,19 @@ const EditPerson = () => {
         dispatch(updateAddress(address, id));
     };
 
-    const handleAddressChange = (updatedAddress: any, index: any) => {
+    const handleAddressChange = (updatedAddress: AddressType, index: string | undefined | any) => {
         const updatedAddresses = [...personData.addresses];
         updatedAddresses[index] = updatedAddress;
         setPersonData((prevData) => ({
             ...prevData,
             addresses: updatedAddresses,
         }));
+    };
+
+    const handleDeleteAddress = (index: string | undefined) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dispatch(deleteAddress(index));
     };
 
     return (
@@ -112,16 +118,7 @@ const EditPerson = () => {
                                     handleAddressChange(updatedAddress, index);
                                 }}
                                 onUpdate={() => handleSubmitAddress(personData.addresses[index], personData.addresses[index].id)}
-                                onDelete={() => {
-                                    setPersonData((prevData: any) => {
-                                        const updatedAddresses = [...prevData.addresses];
-                                        updatedAddresses.splice(index, 1);
-                                        return {
-                                            ...prevData,
-                                            addresses: updatedAddresses,
-                                        };
-                                    });
-                                }}
+                                onDeleteAddress={() => handleDeleteAddress(personData.addresses[index].id)}
                             />
                         ))
                     )

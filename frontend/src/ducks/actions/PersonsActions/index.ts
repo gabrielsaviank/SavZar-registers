@@ -74,7 +74,6 @@ export const createPerson = ({ name, sex, birthDate, maritalStatus, addresses }:
     }
 };
 
-
 export const updatePerson = (personData: PersonType, id: string) => async (dispatch: Dispatch<any>) => {
     dispatch(updatePersonStart());
     try {

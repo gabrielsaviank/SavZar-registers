@@ -23,6 +23,18 @@ const addressSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        deleteAddressStart: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        deleteAddressSuccess: (state, action) => {
+            state.isLoading = false;
+            state.addresses = action.payload;
+        },
+        deleteAddressFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
     }
 });
 
@@ -31,6 +43,9 @@ export const {
     updateAddressStart,
     updateAddressSuccess,
     updateAddressFailure,
+    deleteAddressStart,
+    deleteAddressSuccess,
+    deleteAddressFailure
 } = addressSlice.actions;
 
 export default addressSlice.reducer;
