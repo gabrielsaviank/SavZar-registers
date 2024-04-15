@@ -7,7 +7,6 @@ import { AddressCardType } from "../../helpers/types";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchViaCep } from "../../ducks/actions/ViaActions";
 
-
 export const AddressCard: React.FC<AddressCardType> = ({
    address,
    onDelete,
@@ -19,7 +18,6 @@ export const AddressCard: React.FC<AddressCardType> = ({
 }) => {
     const dispatch = useDispatch();
     const { via } = useSelector((state: any) => state);
-
     const [populatedAddress, setPopulatedAddress] = useState({ ...address });
 
     useEffect(() => {
@@ -30,16 +28,17 @@ export const AddressCard: React.FC<AddressCardType> = ({
                     city: via.data.localidade || "",
                     complement: via.data.complemento || "",
                     state: via.data.uf || "",
-                    street: via.data.logradouro || ""
+                    street: via.data.logradouro || "",
                 });
             }
         };
 
         populateAddress();
-    }, [via]);
+    }, [via, address]);
 
     const handleFieldChange = (field: string, value: string | number) => {
         onChange(field, value);
+
 
         if (action === "create" && field === "postCode") {
             try {
