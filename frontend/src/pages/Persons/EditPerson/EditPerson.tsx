@@ -9,6 +9,7 @@ import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
 import { createAddress, deleteAddress, updateAddress } from "../../../ducks/actions/AddressesActions";
 import { AddressType } from "../../../helpers/types";
+import { toast, ToastContainer } from "react-toastify";
 
 const EditPerson = () => {
     const { id } = useParams();
@@ -71,6 +72,7 @@ const EditPerson = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         dispatch(updateAddress(address, id));
+        toast.success("🎉 Address Updated");
     };
 
     const handleAddressChange = (updatedAddress: AddressType, index: string | undefined | any) => {
@@ -86,6 +88,7 @@ const EditPerson = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         dispatch(deleteAddress(index));
+        toast.warning("🎉 Address Deleted");
     };
 
 
@@ -100,11 +103,13 @@ const EditPerson = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         dispatch(createAddress(newAddress, persons.id));
+        toast.success("🎉 Address Created");
     };
 
 
     return (
         <Container style={{ paddingTop: 30, paddingBottom: 30 }}>
+            <ToastContainer />
             <Typography variant="h4">Update Person</Typography>
             <form onSubmit={handleSubmit}>
                 <BaseInput
