@@ -9,6 +9,7 @@ import Main from "./pages/Persons/MainPage/Main";
 import CreatePerson from "./pages/Persons/CreateRegister/CreatePerson";
 import EditPerson from "./pages/Persons/EditPerson/EditPerson";
 import PersonDetails from "./pages/Persons/PersonDetails/PersonDetails";
+import Signup from "./pages/Auth/Signup/Signup";
 
 const App = () => {
     const { isAuthenticated } = useSelector(state => state?.auth);
@@ -18,6 +19,7 @@ const App = () => {
             {isAuthenticated && <Header />}
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
                 <Route exact path='/' element={<PrivateRoute/>}>
                     <Route exact path='/main' element={<Main/>}/>
                     <Route exact path='/create' element={<CreatePerson/>}/>

@@ -1,5 +1,6 @@
-import React from "react";
-import { TextField } from "@mui/material";
+import React, { useState } from "react";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
 
 
 type BaseInputType = {
@@ -21,6 +22,12 @@ export const BaseInput = ({
   autoComplete,
   ...props
 }: BaseInputType) => {
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <TextField
             variant="outlined"
@@ -28,11 +35,20 @@ export const BaseInput = ({
             required
             fullWidth
             label={label}
-            type={type}
+            type={showPassword ? "text" : type}
             autoComplete={autoComplete}
             autoFocus={autoFocus}
             value={value}
             onChange={onChange}
+            InputProps={{
+                endAdornment: type === "password" && (
+                    <InputAdornment position="end">
+                        <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </InputAdornment>
+                ),
+            }}
             {...props}
         />
     );

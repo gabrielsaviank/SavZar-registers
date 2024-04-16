@@ -1,47 +1,31 @@
 import React, { useState } from "react";
-import {
-    Avatar,
-    Button, Checkbox,
-    Container,
-    CssBaseline,
-    FormControlLabel,
-    Grid,
-    Link,
-    Typography
-} from "@mui/material";
-
-
+import { Avatar, Container, CssBaseline, Typography } from "@mui/material";
 import { BaseInput } from "../../../components/BaseInput/BaseInput";
-import { styles } from "./styles";
-import { LockPersonOutlined } from "@mui/icons-material";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
-import { useDispatch } from "react-redux";
-import { login } from "../../../ducks/actions/AuthActions";
+import { PersonAdd } from "@mui/icons-material";
+
+import { styles } from "../Login/styles";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        await dispatch(login({ email, password }));
-        navigate("/main");
+    const handleSubmit = () => {
+        console.log("HERE DOGS");
     };
 
     return (
         <div style={styles.mainDiv}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div style={styles.paper}>
+                <CssBaseline/>
+                <div style={styles.paper as React.CSSProperties}>
                     <Avatar style={styles.avatar}>
-                        <LockPersonOutlined />
+                        <PersonAdd/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Sign up
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <BaseInput
@@ -59,10 +43,6 @@ export default function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
                         <BaseButton
                             type="submit"
                             fullWidth
@@ -70,27 +50,23 @@ export default function Login() {
                             color="primary"
                             style={styles.submit}
                         >
-                            Sign In
+                            Sign Up
                         </BaseButton>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link to="/forgot-password" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link
-                                    to="/signup"
-                                    onClick={() => navigate("/signup")} variant="body2"
-                                >
-                                    Dont have an account? Sign Up
-                                </Link>
-                            </Grid>
-                        </Grid>
+
+                        <BaseButton
+                            fullWidth
+                            variant="contained"
+                            color="warning"
+                            style={styles.submit}
+                            onClick={() => navigate("/")}
+                        >
+                            Back
+                        </BaseButton>
                     </form>
                 </div>
             </Container>
         </div>
     );
-}
+};
 
+export default Signup;

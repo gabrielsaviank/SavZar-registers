@@ -104,7 +104,6 @@ const CreatePerson = () => {
             updatedAddresses[index] = updatedAddress;
             return updatedAddresses;
         });
-
     };
 
     return (
