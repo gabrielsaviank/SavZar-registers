@@ -51,7 +51,7 @@ export class AddressesController {
   @Delete('/delete/:id')
   @UseGuards(AuthGuard)
   @UseGuards(AdminGuard)
-  async remove(id: string): Promise<DeleteResult> {
+  async remove(@Param('id') id: string): Promise<DeleteResult> {
     return this.addressesService.remove(id);
   }
 }
