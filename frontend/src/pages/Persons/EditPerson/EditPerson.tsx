@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Typography } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+
 import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
 import { createAddress, deleteAddress, updateAddress } from "../../../ducks/actions/AddressesActions";
 import { AddressType } from "../../../helpers/types";
-import { toast, ToastContainer } from "react-toastify";
 
 const EditPerson = () => {
     const { id } = useParams();
@@ -26,7 +26,6 @@ const EditPerson = () => {
         city: "",
         state: ""
     });
-
 
     const [personData, setPersonData] = useState({
         name: "",

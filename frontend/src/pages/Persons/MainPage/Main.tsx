@@ -17,7 +17,7 @@ const Main = () => {
 
     useEffect(() => {
         dispatch(fetchPersons(currentPage, itemsPerPage));
-    }, [persons]);
+    }, []);
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
