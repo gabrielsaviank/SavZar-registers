@@ -22,7 +22,6 @@ export const BaseTable = ({ data }: any) => {
         dispatch(deletePerson(id));
     };
 
-
     const tableRows = useMemo(() => {
         if (data && Array.isArray(data)) {
             return data.map((row: any) => (
@@ -32,6 +31,11 @@ export const BaseTable = ({ data }: any) => {
                     <TableCell>{row.birthdate}</TableCell>
                     <TableCell>{row.maritalStatus}</TableCell>
                     <TableCell>{row.addresses?.length}</TableCell>
+                    <TableCell>
+                        <Button onClick={() => navigate(`/details/${row.id}`)} style={{ color: "#348ceb" }}>
+                            Details
+                        </Button>
+                    </TableCell>
                     <TableCell>
                         <Button onClick={() => navigate(`/edit/${row.id}`)} style={{ color: "#348ceb" }}>
                             <EditIcon />
@@ -56,6 +60,7 @@ export const BaseTable = ({ data }: any) => {
                     <TableCell>Birthdate</TableCell>
                     <TableCell>Marital Status</TableCell>
                     <TableCell>Addresses</TableCell>
+                    <TableCell>Details</TableCell>
                     <TableCell>Actions</TableCell>
                 </TableRow>
             </TableHead>

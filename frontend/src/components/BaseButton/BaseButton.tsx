@@ -9,6 +9,7 @@ type BaseButtonType = {
     color?: "inherit" | "primary" | "secondary" | "success" | "warning" | "error";
     style?: React.CSSProperties;
     onClick?: () => void;
+    disabled?: boolean;
 };
 
 export const BaseButton = ({
@@ -28,6 +29,7 @@ export const BaseButton = ({
             color={color}
             style={style}
             {...props}
+            disabled={props.disabled}
         >
             {children}
         </Button>

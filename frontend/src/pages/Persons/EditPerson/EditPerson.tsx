@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Typography } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+
 import { BaseInput } from "../../../components/BaseInput/BaseInput";
 import { AddressCard } from "../../../components/AddressForm/AddressCard";
 import { BaseButton } from "../../../components/BaseButton/BaseButton";
 import { fetchPersonById, updatePerson } from "../../../ducks/actions/PersonsActions";
 import { createAddress, deleteAddress, updateAddress } from "../../../ducks/actions/AddressesActions";
 import { AddressType } from "../../../helpers/types";
-import { toast, ToastContainer } from "react-toastify";
 
 const EditPerson = () => {
     const { id } = useParams();
@@ -17,6 +17,7 @@ const EditPerson = () => {
     const { persons } = useSelector((state: any) => state?.persons);
     const dispatch = useDispatch();
     const [showAddAddressCard, setShowAddAddressCard] = useState(false);
+    const [isModified, setIsModified] = useState(false);
     const [newAddress, setNewAddress] = useState({
         postCode: "",
         neighbourhood: "",
@@ -26,7 +27,6 @@ const EditPerson = () => {
         city: "",
         state: ""
     });
-
 
     const [personData, setPersonData] = useState({
         name: "",
@@ -66,6 +66,7 @@ const EditPerson = () => {
             ...prevData,
             [field]: value,
         }));
+        setIsModified(true);
     };
 
     const handleSubmitAddress = (address: AddressType, id: string | undefined) => {
@@ -82,6 +83,7 @@ const EditPerson = () => {
             ...prevData,
             addresses: updatedAddresses,
         }));
+        setIsModified(true);
     };
 
     const handleDeleteAddress = (index: string | undefined) => {
@@ -105,7 +107,6 @@ const EditPerson = () => {
         dispatch(createAddress(newAddress, persons.id));
         toast.success("🎉 Address Created");
     };
-
 
     return (
         <Container style={{ paddingTop: 30, paddingBottom: 30 }}>
@@ -180,6 +181,7 @@ const EditPerson = () => {
                         variant="contained"
                         color="primary"
                         onClick={() => handleSubmit}
+                        disabled={!isModified}
                         style={{ marginTop: "30px" }}
                     >
                         Submit
