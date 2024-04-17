@@ -32,7 +32,7 @@ export const Header = () => {
                 <Box sx={{ display: "flex", justifyContent: "flex-end", flexGrow: 1 }}>
                     <Button color="inherit" sx={{ textTransform: "none" }} onClick={() => navigate("/main")}>
                     <span>
-                      <Typography variant="body1">Registers</Typography>
+                      <Typography variant="body1">Home</Typography>
                     </span>
                     </Button>
                     <Button color="inherit" sx={{ textTransform: "none" }} onClick={() => navigate("/create")}>

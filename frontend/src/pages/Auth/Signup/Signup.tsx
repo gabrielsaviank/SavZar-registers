@@ -6,19 +6,29 @@ import { PersonAdd } from "@mui/icons-material";
 
 import { styles } from "../Login/styles";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signup } from "../../../ducks/actions/AuthActions";
+import { toast, ToastContainer } from "react-toastify";
 
 const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleSubmit = () => {
-        console.log("HERE DOGS");
+    const handleSubmit = async(e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        await dispatch(signup({ email, password }));
+        await toast.success("🎉 User created successfully!");
+        navigate("/main");
     };
 
     return (
         <div style={styles.mainDiv}>
             <Container component="main" maxWidth="xs">
+                <ToastContainer/>
                 <CssBaseline/>
                 <div style={styles.paper as React.CSSProperties}>
                     <Avatar style={styles.avatar}>
