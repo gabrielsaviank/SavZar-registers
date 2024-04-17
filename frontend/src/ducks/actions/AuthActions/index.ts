@@ -1,6 +1,4 @@
 import AlleSysApi from "../../../api/AlleSysApi";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import {
     loginFailure,
     loginStart,
@@ -30,7 +28,6 @@ export const login = (credentials: UserType) => async (dispatch: Dispatch<any>) 
         }
     }
 };
-
 
 export const signup = (credentials: UserType) => async (dispatch: Dispatch<any>) => {
     dispatch(signUpStart());
