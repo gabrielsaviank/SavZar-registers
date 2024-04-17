@@ -30,7 +30,7 @@ const Main = () => {
                 <BaseTable data={persons}/>
                 <Stack spacing={2}>
                     <Pagination
-                        count={3}
+                        count={2}
                         page={currentPage}
                         onChange={handlePageChange}
                     />
