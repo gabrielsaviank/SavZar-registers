@@ -82,8 +82,6 @@ export const updatePerson = (personData: PersonType, id: string) => async (dispa
             maritalStatus: personData.maritalStatus,
         }, { withCredentials: true });
 
-        console.log("RESPONSE UPDATE", response.data);
-
         dispatch(updatePersonSuccess(response.data));
     } catch (error) {
         if (error instanceof Error) {

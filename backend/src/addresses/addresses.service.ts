@@ -14,8 +14,6 @@ export class AddressesService {
   ) {}
 
   async create(addressDto: CreateAddressDto, person: PersonEntity) {
-    console.log('HERE');
-
     const address = this.addressesRepository.create({
       id: uuidv4(),
       postCode: addressDto.postCode,
