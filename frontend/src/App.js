@@ -10,6 +10,7 @@ import CreatePerson from "./pages/Persons/CreateRegister/CreatePerson";
 import EditPerson from "./pages/Persons/EditPerson/EditPerson";
 import PersonDetails from "./pages/Persons/PersonDetails/PersonDetails";
 import Signup from "./pages/Auth/Signup/Signup";
+import Profile from "./pages/Profile/Profile";
 
 const App = () => {
     const { isAuthenticated } = useSelector(state => state?.auth);
@@ -25,6 +26,7 @@ const App = () => {
                     <Route exact path='/create' element={<CreatePerson/>}/>
                     <Route exact path='/edit/:id' element={<EditPerson/>}/>
                     <Route exact path="/details/:id" element={<PersonDetails/>}/>
+                    <Route exact path="/profile" element={<Profile/>}/>
                 </Route>
             </Routes>
         </Router>

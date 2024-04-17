@@ -40,7 +40,7 @@ export const Header = () => {
                       <Typography variant="body1">New Register</Typography>
                     </span>
                     </Button>
-                    <Button color="inherit" sx={{ textTransform: "none" }}>
+                    <Button color="inherit" sx={{ textTransform: "none" }} onClick={() => navigate("/profile")}>
                         <span>
                           <Typography variant="body1">Profile</Typography>
                         </span>

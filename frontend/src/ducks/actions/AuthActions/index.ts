@@ -6,7 +6,7 @@ import {
     logoutSuccess,
     logoutStart,
     logoutFailure,
-    signUpStart
+    signUpStart, signUpSuccess, signUpFailure, getProfileStart, getProfileSuccess, getProfileFailure
 } from "../../reducers/auth/authSlice";
 import { Dispatch } from "react";
 import { UserType } from "../../../helpers/types";
@@ -37,12 +37,12 @@ export const signup = (credentials: UserType) => async (dispatch: Dispatch<any>)
             password: credentials.password
         }, { withCredentials: true });
 
-        dispatch(loginSuccess(response.data));
+        dispatch(signUpSuccess(response.data));
     } catch (error) {
         if (error instanceof Error) {
-            dispatch(loginFailure(error.message));
+            dispatch(signUpFailure(error.message));
         } else {
-            dispatch(loginFailure("An unknown error occurred."));
+            dispatch(signUpFailure("An unknown error occurred."));
         }
     }
 };
@@ -57,6 +57,21 @@ export const logout = () => async (dispatch: Dispatch<any>) => {
             dispatch(logoutFailure(error.message));
         } else {
             dispatch(logoutFailure("An unknown error occurred."));
+        }
+    }
+};
+
+export const getProfile = (id: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(getProfileStart());
+    try {
+        const response = await AlleSysApi.get(`/auth/${id}`, { withCredentials: true });
+
+        dispatch(getProfileSuccess(response.data));
+    } catch (error) {
+        if (error instanceof Error) {
+            dispatch(getProfileFailure(error.message));
+        } else {
+            dispatch(getProfileFailure("An unknown error occurred."));
         }
     }
 };

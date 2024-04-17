@@ -53,6 +53,19 @@ const authSlice = createSlice({
         signUpFailure: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        getProfileStart: (state) => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        getProfileSuccess: (state, action) => {
+            state.isLoading = false;
+            state.isAuthenticated = true;
+            state.user = action.payload;
+        },
+        getProfileFailure: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     },
 });
@@ -67,7 +80,10 @@ export const {
     logoutSuccess,
     signUpStart,
     signUpSuccess,
-    signUpFailure
+    signUpFailure,
+    getProfileStart,
+    getProfileSuccess,
+    getProfileFailure
 } = authSlice.actions;
 
 export default authSlice.reducer;
